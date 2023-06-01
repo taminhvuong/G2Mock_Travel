@@ -10,10 +10,10 @@ import com.example.travel_mock2302.form.FormUpdateTrip;
 import java.util.List;
 
 public interface ITripService {
-    public Trip findByCodeTour(String codeTrip);
+    public Trip findByCodeTrip(String codeTrip);
     public List<Trip> findAll();
     public  void deleteByCodeTrip(String codeTrip);
     public void saveTrip (FormCreateTrip formCreateTrip);
 
-    public  void updateByCodeTrip(String codeTour, FormUpdateTrip formUpdateTrip);
+    public  void updateByCodeTrip(String codeTrip, FormUpdateTrip formUpdateTrip);
 }

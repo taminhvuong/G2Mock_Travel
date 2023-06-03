@@ -39,7 +39,7 @@ public class Trip {
     @JoinColumn(name = "codeTour",nullable = false)
     private Tour tour;
     @ManyToOne
-    @JoinColumn(name = "userId",nullable = false)
+    @JoinColumn(name = "userId")
     private User user;
     @OneToMany(mappedBy = "trip")
     private List<Booking> bookings;

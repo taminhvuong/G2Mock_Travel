@@ -1,7 +1,9 @@
 package com.vti.dto;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class TripDto {
     private String codeTrip;
 
@@ -18,5 +20,6 @@ public class TripDto {
     private float surcharge ;
 
     private int status;
-    private int likeTrip;
+    private String codeTour;
+
 }

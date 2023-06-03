@@ -21,6 +21,8 @@ public class Tour {
 //    private String itineraryTour;
     @Column
     private String startingGate;
+    @Column (unique = true)
+    private String destination;
     @Column
     private String vehicle;
 

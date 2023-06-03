@@ -30,8 +30,7 @@ public class Tour {
     private int tourTime;
     @OneToMany(mappedBy = "tour")
     private List<Trip> trips;
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
-    private Set<TourProvince> tourProvinces;
+    
     @OneToMany(mappedBy = "tour")
     private List<DetailTour> detailTours;
 

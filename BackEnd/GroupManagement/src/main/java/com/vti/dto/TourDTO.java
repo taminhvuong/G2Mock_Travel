@@ -1,7 +1,6 @@
 package com.vti.dto;
 
 
-import com.vti.entity.TourProvince;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

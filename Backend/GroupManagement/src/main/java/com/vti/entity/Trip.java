@@ -3,6 +3,7 @@ package com.vti.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,8 +27,9 @@ public class Trip {
     private int numberOfPassengers;
     @Column
     private float priceAdult ;
-    @Column
-    private float priceChildren ;
+
+    @Formula(" priceAdult / 100 *75")
+    private float priceChildren;
     @Column
     private float surcharge ;
 

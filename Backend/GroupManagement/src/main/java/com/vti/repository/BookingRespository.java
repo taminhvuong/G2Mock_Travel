@@ -1,29 +1,27 @@
 package com.vti.repository;
 
+
+import com.vti.entity.Booking;
 import com.vti.entity.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+@Repository
+public interface BookingRespository  extends JpaRepository<Booking, Integer> , JpaSpecificationExecutor<Booking> {
 
-public interface TripRepository extends JpaRepository<Trip, String>, JpaSpecificationExecutor<Trip> {
-    Trip findByCodeTrip(String codeTrip);
-
-    List<Trip> findAll();
-
-    boolean existsTripByCodeTrip(String codeTrip);
-
+    List<Booking> findAll();
+    Booking findById(int id);
     @Transactional
-    void deleteByCodeTrip(String codeTrip);
+    void deleteById(int  id);
 
     @Transactional
     @Modifying
-    @Query("delete from Trip where codeTrip IN (:ids)")
-    public void deleteByListCodeTrip(@Param("ids") List<String> ids);
-
-
+    @Query("delete from Booking where id IN (:ids)")
+    public void deleteByListId(@Param("ids") List<Integer> ids);
 }

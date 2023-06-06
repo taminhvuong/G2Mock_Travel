@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class FormUpdateTrip {
+public class TripFormForUpdate {
     private Date start_date;
 
     private Date end_date;

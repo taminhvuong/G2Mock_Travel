@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class FormCreateTrip {
+public class TripFormForCreate {
     private String codeTrip;
 
     private Date start_date;

@@ -1,8 +1,8 @@
 package com.vti.service;
 
 
-import com.vti.dto.FormCreateTrip;
-import com.vti.dto.FormUpdateTrip;
+import com.vti.dto.TripFormForCreate;
+import com.vti.dto.TripFormForUpdate;
 
 import com.vti.dto.filter.TripFilter;
 import com.vti.entity.Tour;
@@ -32,13 +32,15 @@ public class TripService implements ITripService {
 
     @Override
     public Page<Trip> findAll(Pageable pageable, TripFilter filter, String search){
-
-
         TripSpecificationBuilder specification = new TripSpecificationBuilder(filter, search);
-
-//        return tripRepository.findAll(specification.build(), pageable);
         return tripRepository.findAll(specification.build(),pageable);
     }
+
+    @Override
+    public boolean existsTripByCodeTrip(String codeTrip) {
+        return tripRepository.existsTripByCodeTrip(codeTrip);
+    }
+
     @Override
     public void deleteByCodeTrip(String codeTrip) {
 
@@ -46,19 +48,25 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public void saveTrip(FormCreateTrip formCreateTrip) {
-        Tour tour=tourRepository.findByCodeTour(formCreateTrip.getTourCode());
-        Trip trip = modelMapper.map(formCreateTrip, Trip.class);
+    public void saveTrip(TripFormForCreate tripFormForCreate) {
+        Tour tour=tourRepository.findByCodeTour(tripFormForCreate.getTourCode());
+        Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
         trip.setTour(tour);
         tripRepository.save(trip);
     }
 
     @Override
-    public void updateByCodeTrip(String codeTrip, FormUpdateTrip formUpdateTour) {
+    public void updateTripByCodeTrip(String codeTrip, TripFormForUpdate formUpdateTour) {
         Tour tour=tourRepository.findByCodeTour(formUpdateTour.getTourCode());
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
         trip.setTour(tour);
         trip = modelMapper.map(formUpdateTour, Trip.class);
         tripRepository.save(trip);
+    }
+
+    @Override
+    public void updateTripNumberOfPassengersByCodeTrip(String codeTrip) {
+        Trip trip = tripRepository.findByCodeTrip(codeTrip);
+trip.setNumberOfPassengers(trip.getNumberOfPassengers()-1);
     }
 }

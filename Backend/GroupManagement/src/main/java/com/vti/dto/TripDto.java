@@ -1,15 +1,20 @@
 package com.vti.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 @Data
 public class TripDto {
     private String codeTrip;
-
-    private Date start_date;
-
-    private Date end_date;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     private int numberOfPassengers;
 
@@ -21,5 +26,6 @@ public class TripDto {
 
     private int status;
     private String codeTour;
+    private String destinationTour;
 
 }

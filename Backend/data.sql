@@ -87,7 +87,7 @@ Quý khách ăn trưa, đoàn tiếp tục khởi hành đi Nha Trang.
 Sau khi dùng bữa trưa, Quý khách quay về trung tâm thành phố. Buổi chiều Quý khách ăn chiều tự túc và tự do nghỉ ngơi tại khách sạn hoặc tự túc chi phí điểm tham quan như sau:
 du ngoạn trên du thuyền Emperor (chi phí tự túc), tàu sẽ di chuyển dọc thành phố biển Nha Trang, du khách sẽ được ngắm cảnh hoàng hôn đẹp nhất trong khi thưởng thức tiệc cocktail, bữa tối tinh tế và nghệ sỹ ghi ta, violon chơi những bản nhạc du dương trong một khung cảnh lãng mạn dưới trời sao, ánh trăng và ánh đèn rực rỡ của thành phố.
 ','NDSGN5251'	),
-	(				'Ngày 5', 			'Sau khi dùng buffet sáng và trả phòng khách sạn. Xe đưa Quý khách đi tham quan:
+	(				'Ngày 5', 			'Sau khi dùuseruseruserng buffet sáng và trả phòng khách sạn. Xe đưa Quý khách đi tham quan:
 
 - Trung tâm trang sức Princess Jewelry (đường Lê Hồng Phong): tham quan, tìm hiêu quy trình sản xuất ngọc trai, cách phân loại. Tại đây, Quý khách có thể lựa chọn cho mình những sản phẩm trang sức cao cấp nổi tiếng được gắn đá quý, ngọc trai cũng như những sản phẩm chất lượng cao được làm từ ngọc trai nuôi cấy tự nhiên.
 -  Mua sắm đặc sản phố biển tại Hương Đà Nha Trang

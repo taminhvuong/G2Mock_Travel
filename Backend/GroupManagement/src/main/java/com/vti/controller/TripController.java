@@ -20,6 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/trips")
+@CrossOrigin("*")
+
 public class TripController {
 
     @Autowired
@@ -47,7 +49,7 @@ public class TripController {
         return new ResponseEntity<>(service.existsTripByCodeTrip(codeTrip), HttpStatus.OK);
     }
 
-    @PostMapping("/save")
+    @PostMapping("")
     public ResponseEntity<?> createTrip(@RequestBody TripFormForCreate form) {
         service.saveTrip(form);
         return new ResponseEntity<String>("Create successfully!", HttpStatus.OK);

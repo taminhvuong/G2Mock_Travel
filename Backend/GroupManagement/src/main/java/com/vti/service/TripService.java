@@ -49,10 +49,18 @@ public class TripService implements ITripService {
 
     @Override
     public void saveTrip(TripFormForCreate tripFormForCreate) {
+        if (tripFormForCreate.getTourCode() !=null){
         Tour tour=tourRepository.findByCodeTour(tripFormForCreate.getTourCode());
         Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
         trip.setTour(tour);
         tripRepository.save(trip);
+        }
+        else{
+          //  Trip trip=new Trip();
+        Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
+           // trip.setCodeTrip(tripFormForCreate.getCodeTrip());
+            tripRepository.save(trip);
+        }
     }
 
     @Override
@@ -67,6 +75,6 @@ public class TripService implements ITripService {
     @Override
     public void updateTripNumberOfPassengersByCodeTrip(String codeTrip) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
-trip.setNumberOfPassengers(trip.getNumberOfPassengers()-1);
+        trip.setNumberOfPassengers(trip.getNumberOfPassengers() - 1);
     }
 }

@@ -24,9 +24,9 @@ public class BookingDto {
 
     private String codeTrip;
 
-    private Date start_date;
+    private Date startDate;
 
-    private Date end_date;
+    private Date endDate;
 
     private int numberOfPassengers;
 

@@ -23,4 +23,7 @@ public class UserTrip {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+     @Column(columnDefinition = "bit default 0")
+     private int likeTrip;
 }

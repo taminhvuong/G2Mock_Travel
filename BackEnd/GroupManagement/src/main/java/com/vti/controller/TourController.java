@@ -1,13 +1,22 @@
 package com.vti.controller;
 
+import com.vti.dto.TourDTO;
+import com.vti.dto.TourFormForCreate;
+import com.vti.dto.TourFormForUpdate;
+import com.vti.dto.filter.TourFilter;
 import com.vti.entity.Tour;
 import com.vti.service.TourService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/tours")
@@ -16,11 +25,21 @@ public class TourController {
 
     @Autowired
     private TourService tourService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<Page<Tour>> getAllTours(Pageable pageable) {
-        Page<Tour> tours = tourService.getAllTours(pageable);
-        return new ResponseEntity<>(tours, HttpStatus.OK);
+    public ResponseEntity<?> getAllTours(
+            Pageable pageable,
+            TourFilter filter,
+            @RequestParam(required = false)
+                    String search) {
+        Page<Tour> tours = tourService.getAllTours(pageable, filter, search);
+
+        List<TourDTO> tourDtos = modelMapper.map(tours.getContent(), new TypeToken<List<TourDTO>>() {
+        }.getType());
+        Page<TourDTO> dtoPages = new PageImpl<>(tourDtos, pageable, tours.getTotalElements());
+        return new ResponseEntity<>(dtoPages, HttpStatus.OK);
     }
 
     @GetMapping("/{codeTour}")
@@ -30,13 +49,13 @@ public class TourController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createTour(@RequestBody Tour tour) {
+    public ResponseEntity<Void> createTour(@RequestBody TourFormForCreate tour) {
         tourService.createTour(tour);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{codeTour}")
-    public ResponseEntity<Void> updateTour(@PathVariable("codeTour") String codeTour, @RequestBody Tour tour) {
+    public ResponseEntity<Void> updateTour(@PathVariable("codeTour") String codeTour, @RequestBody TourFormForUpdate tour) {
         tourService.updateTour(codeTour, tour);
         return new ResponseEntity<>(HttpStatus.OK);
     }

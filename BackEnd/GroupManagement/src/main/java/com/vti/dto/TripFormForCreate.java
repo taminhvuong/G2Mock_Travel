@@ -12,11 +12,12 @@ import java.util.Date;
 public class TripFormForCreate {
     private String codeTrip;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date start_date;
-    @Temporal(TemporalType.DATE)
+
+    private Date startDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date end_date;
+
+    private Date endDate;
 
     private int numberOfPassengers;
 

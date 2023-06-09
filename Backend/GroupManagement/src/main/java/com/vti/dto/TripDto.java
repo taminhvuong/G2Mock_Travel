@@ -10,10 +10,10 @@ import java.util.Date;
 public class TripDto {
     private String codeTrip;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
     private int numberOfPassengers;

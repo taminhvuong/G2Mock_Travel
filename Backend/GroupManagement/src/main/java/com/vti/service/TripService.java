@@ -5,6 +5,7 @@ import com.vti.dto.TripFormForCreate;
 import com.vti.dto.TripFormForUpdate;
 
 import com.vti.dto.filter.TripFilter;
+import com.vti.entity.DetailTour;
 import com.vti.entity.Tour;
 import com.vti.entity.Trip;
 import com.vti.repository.TourRepository;
@@ -46,6 +47,12 @@ public class TripService implements ITripService {
 
         tripRepository.deleteById(codeTrip);
     }
+
+//    @Override
+//    public DetailTour getDetailTourByCodeTrip(String codeTrip) {
+//        tripRepository.getDetailTourByCodeTrip(codeTrip);
+//        return null;
+//    }
 
     @Override
     public void saveTrip(TripFormForCreate tripFormForCreate) {

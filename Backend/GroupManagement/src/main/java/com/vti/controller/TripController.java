@@ -1,10 +1,13 @@
 package com.vti.controller;
 
+import com.vti.dto.DetailTourDto;
 import com.vti.dto.TripFormForCreate;
 import com.vti.dto.TripFormForUpdate;
 import com.vti.dto.TripDto;
 import com.vti.dto.filter.TripFilter;
+import com.vti.entity.DetailTour;
 import com.vti.entity.Trip;
+import com.vti.service.IDetailTourService;
 import com.vti.service.ITripService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -27,6 +30,8 @@ public class TripController {
     @Autowired
     private ITripService service;
     @Autowired
+    private IDetailTourService detailTourService;
+    @Autowired
     private ModelMapper modelMapper;
 
     @GetMapping()
@@ -37,13 +42,18 @@ public class TripController {
                     String search) {
         Page<Trip> trips = service.findAll(pageable, filter, search);
 
-
         List<TripDto> tripDtos = modelMapper.map(trips.getContent(), new TypeToken<List<TripDto>>() {
         }.getType());
         Page<TripDto> dtoPages = new PageImpl<>(tripDtos, pageable, trips.getTotalElements());
         return new ResponseEntity<>(dtoPages, HttpStatus.OK);
     }
-
+    @GetMapping(value = "/getDetailTour/{codeTrip}")
+    public ResponseEntity<?> getDetailTour(@PathVariable(name = "codeTrip") String codeTrip) {
+        DetailTour detailTour=detailTourService.getDetailTourByCodeTrip(codeTrip);
+        List<DetailTour> detailTours = modelMapper.map(detailTour, new TypeToken<List<DetailTourDto>>() {
+        }.getType());
+        return new ResponseEntity<>(detailTours, HttpStatus.OK);
+    }
     @GetMapping(value = "/codeTrip/{codeTrip}")
     public ResponseEntity<?> existsTripByCodeTrip(@PathVariable(name = "codeTrip") String codeTrip) {
         return new ResponseEntity<>(service.existsTripByCodeTrip(codeTrip), HttpStatus.OK);
@@ -57,7 +67,9 @@ public class TripController {
 
     @GetMapping(value = "/{codeTrip}")
     public ResponseEntity<?> getTripByCodeTrip(@PathVariable(name = "codeTrip") String codeTrip) {
-        return new ResponseEntity<>(service.findByCodeTrip(codeTrip), HttpStatus.OK);
+        Trip trip=service.findByCodeTrip(codeTrip);
+        TripDto tripDto=modelMapper.map(trip,TripDto.class);
+        return new ResponseEntity<>(tripDto, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{codeTrip}")

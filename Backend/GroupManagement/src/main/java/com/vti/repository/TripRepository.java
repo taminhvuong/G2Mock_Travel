@@ -1,5 +1,6 @@
 package com.vti.repository;
 
+import com.vti.entity.DetailTour;
 import com.vti.entity.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -19,6 +20,15 @@ public interface TripRepository extends JpaRepository<Trip, String>, JpaSpecific
 
     @Transactional
     void deleteByCodeTrip(String codeTrip);
+
+//    @Transactional
+////    @Query("from DetailTour  inner join Trip  on Trip.tour.codeTour= DetailTour.tour.codeTour where DetailTour.tour.codeTour =:pcodeTour")
+//    @Query(" from DetailTour dt" +
+//
+//            " inner join Trip tr on tr.tour.codeTour= dt.tour.codeTour" +
+//            " where tr.codeTrip =:codeTrip ")
+//
+//    public List<DetailTour> getDetailTourByCodeTrip(@Param("codeTrip") String codeTrip);
 
     @Transactional
     @Modifying

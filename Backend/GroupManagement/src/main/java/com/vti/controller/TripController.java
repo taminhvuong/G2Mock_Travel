@@ -84,9 +84,9 @@ public class TripController {
         return new ResponseEntity<>("Delete successfully",HttpStatus.OK);
     }
 
-//	@DeleteMapping(value = "/{ids}")
-//	public ResponseEntity<?> deleteGroups(@PathVariable(name = "ids") List<Short> ids) {
-//		service.deleteGroups(ids);
-//		return new ResponseEntity<String>("Delete successfully!", HttpStatus.OK);
-//	}
+	@DeleteMapping(value = "/deleteList/{codeTrips}")
+	public ResponseEntity<?> deleteGroups(@PathVariable(name = "codeTrips") List<String> codeTrips) {
+		service.deleteByListCodeTrip(codeTrips);
+		return new ResponseEntity<String>("Delete trips successfully!", HttpStatus.OK);
+	}
 }

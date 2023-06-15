@@ -3,8 +3,10 @@ package com.vti.controller;
 import com.vti.dto.TourDTO;
 import com.vti.dto.TourFormForCreate;
 import com.vti.dto.TourFormForUpdate;
+import com.vti.dto.TripDto;
 import com.vti.dto.filter.TourFilter;
 import com.vti.entity.Tour;
+import com.vti.entity.Trip;
 import com.vti.service.TourService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -43,9 +45,11 @@ public class TourController {
     }
 
     @GetMapping("/{codeTour}")
-    public ResponseEntity<Tour> getTourByCode(@PathVariable("codeTour") String codeTour) {
+    public ResponseEntity<?> getTourByCode(@PathVariable("codeTour") String codeTour) {
         Tour tour = tourService.getTourByCode(codeTour);
-        return new ResponseEntity<>(tour, HttpStatus.OK);
+
+        TourDTO tourDTO=modelMapper.map(tour,TourDTO.class);
+        return new ResponseEntity<>(tourDTO, HttpStatus.OK);
     }
 
     @PostMapping

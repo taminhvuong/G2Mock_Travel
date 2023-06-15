@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TripService implements ITripService {
     @Autowired
@@ -48,6 +50,13 @@ public class TripService implements ITripService {
         tripRepository.deleteById(codeTrip);
     }
 
+    @Override
+    public void deleteByListCodeTrip(List<String> codeTrips) {
+
+            tripRepository.deleteByListCodeTrip(codeTrips);
+
+    }
+
 //    @Override
 //    public DetailTour getDetailTourByCodeTrip(String codeTrip) {
 //        tripRepository.getDetailTourByCodeTrip(codeTrip);
@@ -56,8 +65,8 @@ public class TripService implements ITripService {
 
     @Override
     public void saveTrip(TripFormForCreate tripFormForCreate) {
-        if (tripFormForCreate.getTourCode() !=null){
-        Tour tour=tourRepository.findByCodeTour(tripFormForCreate.getTourCode());
+        if (tripFormForCreate.getCodeTrip() !=null){
+        Tour tour=tourRepository.findByCodeTour(tripFormForCreate.getCodeTour());
         Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
         trip.setTour(tour);
         tripRepository.save(trip);
@@ -72,11 +81,27 @@ public class TripService implements ITripService {
 
     @Override
     public void updateTripByCodeTrip(String codeTrip, TripFormForUpdate formUpdateTour) {
-        Tour tour=tourRepository.findByCodeTour(formUpdateTour.getTourCode());
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
-        trip.setTour(tour);
-        trip = modelMapper.map(formUpdateTour, Trip.class);
-        tripRepository.save(trip);
+        System.out.println(trip.getCodeTrip());
+        if(formUpdateTour.getCodeTour()!=null){
+            Tour tour=tourRepository.findByCodeTour(formUpdateTour.getCodeTour());
+            trip.setTour(tour);
+            trip.setPriceAdult(formUpdateTour.getPriceAdult());
+            trip.setEndDate(formUpdateTour.getEndDate());
+            trip.setStartDate(formUpdateTour.getStartDate());
+            trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
+//            trip = modelMapper.map(formUpdateTour, Trip.class);
+            tripRepository.save(trip);
+        }
+        else {
+
+            trip.setPriceAdult(formUpdateTour.getPriceAdult());
+            trip.setEndDate(formUpdateTour.getEndDate());
+            trip.setStartDate(formUpdateTour.getStartDate());
+            trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
+            tripRepository.save(trip);
+        }
+
     }
 
     @Override

@@ -32,8 +32,8 @@ public interface TripRepository extends JpaRepository<Trip, String>, JpaSpecific
 
     @Transactional
     @Modifying
-    @Query("delete from Trip where codeTrip IN (:ids)")
-    public void deleteByListCodeTrip(@Param("ids") List<String> ids);
+    @Query("delete from Trip where codeTrip IN (:codeTrips)")
+    public void deleteByListCodeTrip(@Param("codeTrips") List<String> codeTrips);
 
 
 }

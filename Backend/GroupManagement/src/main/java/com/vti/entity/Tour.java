@@ -25,7 +25,8 @@ public class Tour {
     private String destination;
     @Column
     private String vehicle;
-
+    @Column
+    private String img ;
     @Column(columnDefinition="text")
     private String description;
     @Column

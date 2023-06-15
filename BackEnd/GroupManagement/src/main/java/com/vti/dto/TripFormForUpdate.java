@@ -26,6 +26,6 @@ public class TripFormForUpdate {
     private float surcharge ;
 
     private int status;
-    private String tourCode;
+    private String codeTour;
 
 }

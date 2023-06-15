@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.Set;
 
 @Data
@@ -21,6 +22,7 @@ public class TourDTO {
 
     private int tourTime;
 
+    private String img ;
     private String destination;
 
 }

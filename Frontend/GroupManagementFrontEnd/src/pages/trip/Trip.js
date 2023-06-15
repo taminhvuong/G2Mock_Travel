@@ -27,7 +27,7 @@ import { FastField, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
 import { toastr } from "react-redux-toastr";
-
+//import TableTrip from "./TableTrip";
 const Trip = (props) => {
 
   const getListTrip = props.getListTripAction;
@@ -44,6 +44,12 @@ const Trip = (props) => {
     getAllTrip();
   }, [getListTrip, size]);
 
+  const actionFormatterWatch= (cell, row, rowIndex) => {
+
+    return (
+      <Button size={16} className="" >Detail</Button>
+    );
+  };
   const actionFormatter = (cell, row, rowIndex) => {
 
     return (
@@ -104,6 +110,17 @@ const Trip = (props) => {
       dataField: "action",
       text: "Action",
       formatter: actionFormatter,
+      headerStyle: (colum, colIndex) => {
+        return { width: '80px' };
+      },
+      align: () => {
+        return 'center';
+      },
+    },
+    {
+      dataField: "chitiet",
+      text: "",
+      formatter: actionFormatterWatch,
       headerStyle: (colum, colIndex) => {
         return { width: '80px' };
       },
@@ -223,29 +240,38 @@ const Trip = (props) => {
   }
 
   const deleteTrip = async () => {
-    if (props.selectedRows.length !== 0) {
-      try {
-        await TripApi.deleteByIds(props.selectedRows);
-        showSuccessNotification(
+    let answer = window.confirm(`Bạn có chắc muốn Xóa: ${props.selectedRows}`)
+    if(answer){
+      if (props.selectedRows.length !== 0) {
+        try {
+          await TripApi.deleteByIds(props.selectedRows);
+          showSuccessNotification(
+            "Delete Trip",
+            "Delete Trip Successfully!");
+          refreshForm();
+        } catch (error) {
+          console.log(error);
+          // redirect page error server
+          props.history.push("/auth/500");
+        }
+      } else {
+        showErrorNotification(
           "Delete Trip",
-          "Delete Trip Successfully!");
-        refreshForm();
-      } catch (error) {
-        console.log(error);
-        // redirect page error server
-        props.history.push("/auth/500");
+          "You must select trips"
+        );
       }
-    } else {
-      showErrorNotification(
-        "Delete Trip",
-        "You must select trips"
-      );
     }
+    else
+    return;
+   
   }
 
   return (
     <Container fluid className="p-0">
       <h1 className="h3 mb-3">Trip Management</h1>
+      {/* <TableTrip trips={props.trips} tableColumns={tableColumns} >
+
+      </TableTrip> */}
       <Row>
         <Col>
           <Card>
@@ -288,6 +314,8 @@ const Trip = (props) => {
                         hover
                         bordered
                         remote
+
+                        //paging 
                         pagination={paginationFactory({
                           page: props.page,
                           sizePerPage: props.size,
@@ -298,6 +326,7 @@ const Trip = (props) => {
 
                           hideSizePerPage: true,
                         })}
+                        //filter sort
                         filter={filterFactory()}
                         selectRow={{
                           mode: 'checkbox',
@@ -355,7 +384,8 @@ const Trip = (props) => {
                  
                   values.numberOfPassengers,
                   values.priceAdult,
-                  values.surcharge);
+                  values.surcharge,
+                  values.codeTour);
                 // show notification
                 showSuccessNotification(
                   "Create Trip",
@@ -469,7 +499,20 @@ const Trip = (props) => {
                     />
                   </Col>
                 </Row>
-
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Code Tour:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="codeTour"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
               </ModalBody>
 
               {/* footer */}
@@ -494,28 +537,18 @@ const Trip = (props) => {
             {
 
               endDate: tripUpdateInfo && tripUpdateInfo.endDate !== undefined && tripUpdateInfo.endDate !== null ? tripUpdateInfo.endDate : '',
-              startDate: '',
+          //  endDate:'',  
+          startDate:tripUpdateInfo && tripUpdateInfo.startDate !== undefined && tripUpdateInfo.startDate !== null ? tripUpdateInfo.startDate : '',
               priceAdult: tripUpdateInfo && tripUpdateInfo.priceAdult !== undefined && tripUpdateInfo.priceAdult !== null ? tripUpdateInfo.priceAdult : '',
               numberOfPassengers: tripUpdateInfo && tripUpdateInfo.numberOfPassengers !== undefined && tripUpdateInfo.numberOfPassengers !== null ? tripUpdateInfo.numberOfPassengers : '',
               surcharge: tripUpdateInfo && tripUpdateInfo.surcharge !== undefined && tripUpdateInfo.surcharge !== null ? tripUpdateInfo.surcharge : '',
+              codeTour: tripUpdateInfo && tripUpdateInfo.codeTour !== undefined && tripUpdateInfo.codeTour !== null ? tripUpdateInfo.codeTour : '',
 
             }
           }
           validationSchema={
             Yup.object({
-              codeTrip: Yup.string()
-                .min(6, 'Must be between 6 and 50 characters')
-                .max(50, 'Must be between 6 and 50 characters')
-                .required('Required')
-                .test('checkUniqueName', 'This name is already registered.', async codeTrip => {
-                  if (codeTrip === tripUpdateInfo.codeTrip) {
-                    return true;
-                  }
-                  // call api
-                  const isExists = await TripApi.existsByName(codeTrip);
-                  return !isExists;
-                }),
-
+             
               numberOfPassengers: Yup.number()
                 .min(0, 'Must be greater than or equal 0 and integer')
                 .integer('Must be greater than or equal 0 and integer'),
@@ -538,6 +571,7 @@ const Trip = (props) => {
                   values.numberOfPassengers,
                   values.priceAdult,
                   values.surcharge,
+                  values.codeTour,
 
                 );
                 // show notification
@@ -593,7 +627,7 @@ const Trip = (props) => {
                     <FastField
                       type="date"
                       bsSize="lg"
-                      name="endtDate"
+                      name="endDate"
                       placeholder="Enter total member"
                       component={ReactstrapInput}
                     />
@@ -636,6 +670,20 @@ const Trip = (props) => {
                       type="number"
                       bsSize="lg"
                       name="surcharge"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Code Tour:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="codeTour"
                       placeholder="Enter total member"
                       component={ReactstrapInput}
                     />

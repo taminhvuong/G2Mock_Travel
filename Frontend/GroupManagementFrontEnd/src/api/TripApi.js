@@ -37,7 +37,8 @@ const create = (
     startDate,
     numberOfPassengers,
     priceAdult,
-    surcharge) => {
+    surcharge,
+    codeTour) => {
 
     const body = {
         codeTrip,
@@ -46,7 +47,8 @@ const create = (
         numberOfPassengers,
         
         priceAdult,
-        surcharge
+        surcharge,
+        codeTour,
     }
 
     return Api.post(url, body);
@@ -56,21 +58,23 @@ const getById = (codeTrip) => {
     return Api.get(`${url}/${codeTrip}`);
 };
 
-const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge) => {
+const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge, codeTour) => {
 
     const body = {
         endDate,
         startDate,
         numberOfPassengers,
         priceAdult,
-        surcharge
+        surcharge, 
+        codeTour
     }
 
     return Api.put(`${url}/${codeTrip}`, body);
 };
 
 const deleteByIds = (ids) => {
-    return Api.delete(`${url}/${ids.toString()}`);
+    
+    return Api.delete(`${url}/deleteList/${ids.toString()}`);
 };
 
 // export

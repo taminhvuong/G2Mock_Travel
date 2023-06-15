@@ -86,7 +86,7 @@ const BasicInputs = async(() => import("../pages/forms/BasicInputs"));
 const AdvancedInputs = async(() => import("../pages/forms/AdvancedInputs"));
 const InputGroups = async(() => import("../pages/forms/InputGroups"));
 const InputTrips = async(() => import("../pages/forms/InputGroups"));
-
+const InputTours = async(() => import("../pages/forms/InputGroups"));
 const Editors = async(() => import("../pages/forms/Editors"));
 const Validation = async(() => import("../pages/forms/Validation"));
 const Wizard = async(() => import("../pages/forms/Wizard"));
@@ -118,6 +118,7 @@ const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 // groups
 const Group = async(() => import("../pages/group/Group"));
 const Trip = async(() => import("../pages/trip/Trip"));
+const Tour = async(() => import("../pages/tour/Tour"));
 
 // Routes
 const landingRoutes = {
@@ -179,6 +180,13 @@ const tripRoutes = {
   icon: ListIcon,
   component: withAuth(Trip),
   children: null
+};
+const tourRoutes = {
+path: "/tours",
+name: "Tour Management",
+icon: ListIcon,
+component: withAuth(Tour),
+children: null
 };
 const pageRoutes = {
   path: "/pages",
@@ -465,6 +473,11 @@ const formRoutes = {
       path: "/forms/input-trips",
       name: "Input Trips",
       component: InputTrips
+    },
+    {
+      path: "/forms/input-tours",
+      name: "Input Tours",
+      component: InputTours
     }
   ]
 };
@@ -624,6 +637,7 @@ export const dashboard = [
   dashboardRoutes,
   groupRoutes,
   tripRoutes,
+  tourRoutes,
   pageRoutes,
   layoutRoutes,
   documentationRoutes,
@@ -653,6 +667,7 @@ export default [
   dashboardRoutes,
   groupRoutes,
   tripRoutes,
+  tourRoutes,
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,

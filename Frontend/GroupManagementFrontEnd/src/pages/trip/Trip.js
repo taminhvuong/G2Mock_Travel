@@ -23,6 +23,7 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import CustomSearch from "./CustomSearch";
 import * as Icon from 'react-feather';
 import CustomFilter from "./CustomFilter";
+import { useNavigate } from 'react-router-dom';
 import { FastField, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
@@ -43,11 +44,13 @@ const Trip = (props) => {
     }
     getAllTrip();
   }, [getListTrip, size]);
+  // const navigator = useNavigate();
+
 
   const actionFormatterWatch= (cell, row, rowIndex) => {
 
     return (
-      <Button size={16} className="" >Detail</Button>
+      <Button size={16} className="" onClick={()=> props.history.push(`/trips/detailTrip/${row.codeTrip}`)}>Detail</Button>
     );
   };
   const actionFormatter = (cell, row, rowIndex) => {

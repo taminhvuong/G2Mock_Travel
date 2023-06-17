@@ -119,6 +119,7 @@ const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 const Group = async(() => import("../pages/group/Group"));
 const Trip = async(() => import("../pages/trip/Trip"));
 const Tour = async(() => import("../pages/tour/Tour"));
+const DetailTrip = async(() => import("../pages/trip/DetailTrip"));
 
 // Routes
 const landingRoutes = {
@@ -176,10 +177,24 @@ const groupRoutes = {
 };
 const tripRoutes = {
   path: "/trips",
+  name: "Trip ",
+  icon: ListIcon,
+  // component: withAuth(Trip),
+  children: 
+  [
+    {
+      path: "/tripsManagement",
   name: "Trip Management",
   icon: ListIcon,
   component: withAuth(Trip),
-  children: null
+    },
+    {
+      path: "/trips/detailTrip/:codeTrip?",
+      name: "Detail Trip",
+      component: DetailTrip
+    },
+    
+  ]
 };
 const tourRoutes = {
 path: "/tours",

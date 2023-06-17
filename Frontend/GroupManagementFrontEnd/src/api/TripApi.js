@@ -57,6 +57,9 @@ const create = (
 const getById = (codeTrip) => {
     return Api.get(`${url}/${codeTrip}`);
 };
+// const getDetailByCodeTrip = (codeTrip) => {
+//     return Api.get(`${url}/getDetailTour/${codeTrip}`);
+// };
 
 const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge, codeTour) => {
 

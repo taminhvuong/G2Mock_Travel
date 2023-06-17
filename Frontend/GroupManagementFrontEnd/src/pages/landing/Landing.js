@@ -57,7 +57,7 @@ const Navigation = () => (
   <Navbar dark expand="md" className="navbar-landing">
     <Container>
       <NavbarBrand href="/">
-        <Box title="AppStack" />
+        <Box title="AppStacks" />
         AppStack
       </NavbarBrand>
       <Nav className="ml-auto" navbar>

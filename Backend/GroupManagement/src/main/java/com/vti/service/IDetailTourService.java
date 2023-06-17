@@ -5,6 +5,6 @@ import com.vti.entity.DetailTour;
 import java.util.List;
 
 public interface IDetailTourService {
-    public DetailTour getDetailTourByCodeTrip(String codeTrip);
-
+//    public DetailTour getDetailTourByCodeTrip(String codeTrip);
+    public DetailTour getDetailTourByCodeTour(String codeTour);
 }

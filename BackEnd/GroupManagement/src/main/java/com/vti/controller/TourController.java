@@ -1,12 +1,11 @@
 package com.vti.controller;
 
-import com.vti.dto.TourDTO;
-import com.vti.dto.TourFormForCreate;
-import com.vti.dto.TourFormForUpdate;
-import com.vti.dto.TripDto;
+import com.vti.dto.*;
 import com.vti.dto.filter.TourFilter;
+import com.vti.entity.DetailTour;
 import com.vti.entity.Tour;
 import com.vti.entity.Trip;
+import com.vti.service.IDetailTourService;
 import com.vti.service.TourService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -27,6 +26,8 @@ public class TourController {
 
     @Autowired
     private TourService tourService;
+    @Autowired
+    private IDetailTourService detailTourService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -57,7 +58,13 @@ public class TourController {
         tourService.createTour(tour);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    @GetMapping(value = "/getDetailTour/{codeTour}")
+    public ResponseEntity<?> getDetailTour(@PathVariable(name = "codeTour") String codeTour) {
+        DetailTour detailTour=detailTourService.getDetailTourByCodeTour(codeTour);
+        List<DetailTourDto> detailTours = modelMapper.map(detailTour, new TypeToken<List<DetailTourDto>>() {
+        }.getType());
+        return new ResponseEntity<>(detailTours, HttpStatus.OK);
+    }
     @PutMapping("/{codeTour}")
     public ResponseEntity<Void> updateTour(@PathVariable("codeTour") String codeTour, @RequestBody TourFormForUpdate tour) {
         tourService.updateTour(codeTour, tour);

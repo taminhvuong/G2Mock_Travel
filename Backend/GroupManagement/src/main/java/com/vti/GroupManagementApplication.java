@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GroupManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GroupManagementApplication.class, args);
+		SpringApplication.run(GroupManagementApplication.class,args);
+		//SpringApplication.run(GroupManagementApplication.class, args);
 	}
 
 }

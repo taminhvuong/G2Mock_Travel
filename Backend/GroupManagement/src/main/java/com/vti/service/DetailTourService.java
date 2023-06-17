@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 public class DetailTourService implements IDetailTourService {
     @Autowired
     private DetailTourResponsitory responsitory;
-    @Override
-    public DetailTour getDetailTourByCodeTrip(String codeTrip) {
-        responsitory.getDetailTourByCodeTrip(codeTrip);
+//    @Override
+//    public DetailTour getDetailTourByCodeTrip(String codeTrip) {
+//        responsitory.getDetailTourByCodeTrip(codeTrip);
+//        return null;
+//    }
+    public DetailTour getDetailTourByCodeTour(String codeTour) {
+        responsitory.getDetailTourByCodeTrip(codeTour);
         return null;
     }
 }

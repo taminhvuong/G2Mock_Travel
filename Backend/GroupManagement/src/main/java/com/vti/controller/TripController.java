@@ -47,13 +47,7 @@ public class TripController {
         Page<TripDto> dtoPages = new PageImpl<>(tripDtos, pageable, trips.getTotalElements());
         return new ResponseEntity<>(dtoPages, HttpStatus.OK);
     }
-    @GetMapping(value = "/getDetailTour/{codeTrip}")
-    public ResponseEntity<?> getDetailTour(@PathVariable(name = "codeTrip") String codeTrip) {
-        DetailTour detailTour=detailTourService.getDetailTourByCodeTrip(codeTrip);
-        List<DetailTour> detailTours = modelMapper.map(detailTour, new TypeToken<List<DetailTourDto>>() {
-        }.getType());
-        return new ResponseEntity<>(detailTours, HttpStatus.OK);
-    }
+
     @GetMapping(value = "/codeTrip/{codeTrip}")
     public ResponseEntity<?> existsTripByCodeTrip(@PathVariable(name = "codeTrip") String codeTrip) {
         return new ResponseEntity<>(service.existsTripByCodeTrip(codeTrip), HttpStatus.OK);

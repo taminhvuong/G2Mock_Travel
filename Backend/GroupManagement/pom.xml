@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
+        <version>3.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vti</groupId>
@@ -15,7 +15,7 @@
     <name>GroupManagement</name>
     <description>Group Management</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -89,9 +89,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArgument>-parameters</compilerArgument>
+
+
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

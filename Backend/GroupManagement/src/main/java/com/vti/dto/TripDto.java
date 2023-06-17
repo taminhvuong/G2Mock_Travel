@@ -24,8 +24,9 @@ public class TripDto {
 
     private float surcharge ;
 
-    private int status;
+
     private String codeTour;
     private String destinationTour;
+    private int timeTour;
 
 }

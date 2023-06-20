@@ -1,13 +1,10 @@
 package com.vti.controller;
 
-import com.vti.dto.DetailTourDto;
 import com.vti.dto.TripFormForCreate;
 import com.vti.dto.TripFormForUpdate;
 import com.vti.dto.TripDto;
 import com.vti.dto.filter.TripFilter;
-import com.vti.entity.DetailTour;
 import com.vti.entity.Trip;
-import com.vti.service.IDetailTourService;
 import com.vti.service.ITripService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -29,8 +26,7 @@ public class TripController {
 
     @Autowired
     private ITripService service;
-    @Autowired
-    private IDetailTourService detailTourService;
+
     @Autowired
     private ModelMapper modelMapper;
 

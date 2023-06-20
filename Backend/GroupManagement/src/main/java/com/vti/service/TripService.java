@@ -5,7 +5,6 @@ import com.vti.dto.TripFormForCreate;
 import com.vti.dto.TripFormForUpdate;
 
 import com.vti.dto.filter.TripFilter;
-import com.vti.entity.DetailTour;
 import com.vti.entity.Tour;
 import com.vti.entity.Trip;
 import com.vti.repository.TourRepository;
@@ -105,8 +104,8 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public void updateTripNumberOfPassengersByCodeTrip(String codeTrip) {
+    public void updateTripNumberOfPassengersByCodeTrip(String codeTrip,int numberOfBuy) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
-        trip.setNumberOfPassengers(trip.getNumberOfPassengers() - 1);
+        trip.setNumberOfPassengers(trip.getNumberOfPassengers() -  numberOfBuy);
     }
 }

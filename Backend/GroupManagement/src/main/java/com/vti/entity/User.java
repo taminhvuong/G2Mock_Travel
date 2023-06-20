@@ -1,6 +1,7 @@
 package com.vti.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -52,7 +53,8 @@ public class User implements Serializable {
     private String avatarUrl;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserTrip> userTrips;
-
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
     public User(String userName, String email, String password, String firstName, String lastName) {
         this.userName = userName;
         this.email = email;

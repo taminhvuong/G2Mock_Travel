@@ -97,7 +97,7 @@ du ngoạn trên du thuyền Emperor (chi phí tự túc), tàu sẽ di chuyển
 - Làng Chài Xưa: với lịch sử 300 năm cái nôi của nghề làm nước mắm, trải nghiệm cảm giác lao động trên đồng muối, đi trên con đường rạng xưa, thăm phố cổ Phan Thiết, , thăm nhà lều của hàm hộ nước mắm xưa, đắm chìm cảm xúc trong biển 3D và thích thú khi đi chợ làng chài xưa với bàn tính tay, bàn cân xưa thú vị,…
 ','NDSGN5251'	);
 
-INSERT INTO `Trip` 	(`codeTrip`,			`end_date`,						`start_date`,		`numberOfPassengers`,		`priceAdult`, 	`surcharge`	,`codeTour`	)
+INSERT INTO `Trip` 	(`codeTrip`,			`endDate`,						`startDate`,		`numberOfPassengers`,		`priceAdult`, 	`surcharge`	,`codeTour`	)
 VALUE				('024-040623QH-7',				'2023-06-07 20:43:09.000000', 			'2023-06-04 20:43:09.000000',		30,	6990000,				 5000000,'NDSGN303'		),
 					('024-100623QH-7',				'2023-06-13 20:43:09.000000', 			'2023-06-10 20:43:09.000000',		25,	6990000,				 5000000,'NDSGN303'		);
               

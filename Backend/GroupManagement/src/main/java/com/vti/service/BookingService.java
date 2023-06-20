@@ -50,7 +50,8 @@ public class BookingService implements IBookingService {
         Trip trip=tripRepository.findByCodeTrip(bookingFormForCreate.getCodeTrip());
         Booking booking = modelMapper.map(bookingFormForCreate, Booking.class);
         booking.setTrip(trip);
-        tripService.updateTripNumberOfPassengersByCodeTrip(trip.getCodeTrip());
+        int numberOfBuy=bookingFormForCreate.getNumberAdult()+bookingFormForCreate.getNumberChildren();
+        tripService.updateTripNumberOfPassengersByCodeTrip(trip.getCodeTrip(),numberOfBuy);
         bookingRespository.save(booking);
     }
 

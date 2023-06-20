@@ -30,6 +30,10 @@ public class Booking {
     @Column
     private Long  priceAll;
     @ManyToOne
+    @JoinColumn(name = "userId",nullable = false)
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "codeTrip",nullable = false)
     private Trip trip;
 }

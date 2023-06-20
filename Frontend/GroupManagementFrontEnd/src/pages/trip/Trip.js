@@ -10,6 +10,8 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  CardHeader,
+  CardText,
 } from "reactstrap";
 import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
 
@@ -47,10 +49,10 @@ const Trip = (props) => {
   // const navigator = useNavigate();
 
 
-  const actionFormatterWatch= (cell, row, rowIndex) => {
+  const actionFormatterWatch = (cell, row, rowIndex) => {
 
     return (
-      <Button size={16} className="" onClick={()=> props.history.push(`/trips/detailTrip/${row.codeTrip}`)}>Detail</Button>
+      <Button size={16} className="" onClick={() => props.history.push(`/detailTrip/${row.codeTrip}`)}>Detail</Button>
     );
   };
   const actionFormatter = (cell, row, rowIndex) => {
@@ -244,7 +246,7 @@ const Trip = (props) => {
 
   const deleteTrip = async () => {
     let answer = window.confirm(`Bạn có chắc muốn Xóa: ${props.selectedRows}`)
-    if(answer){
+    if (answer) {
       if (props.selectedRows.length !== 0) {
         try {
           await TripApi.deleteByIds(props.selectedRows);
@@ -265,8 +267,8 @@ const Trip = (props) => {
       }
     }
     else
-    return;
-   
+      return;
+
   }
 
   return (
@@ -275,6 +277,7 @@ const Trip = (props) => {
       {/* <TableTrip trips={props.trips} tableColumns={tableColumns} >
 
       </TableTrip> */}
+      
       <Row>
         <Col>
           <Card>
@@ -283,8 +286,7 @@ const Trip = (props) => {
                 keyField="codeTrip"
                 data={props.trips}
                 columns={tableColumns}
-                search
-              >
+                search>
                 {
                   toolkitprops => (
                     <>
@@ -310,6 +312,45 @@ const Trip = (props) => {
                           </div>
                         </Col>
                       </Row>
+                      {/* <Row
+
+
+                        data={props.trips}>
+                        <h1 className="h3 mb-3 text-center">Danh sách tour du lịch</h1>
+                        {props.trips.map((row, index) => {
+
+                          return (
+                            <Col lg="4" >
+                              <Card >
+                                <CardHeader>
+                                  { <UncontrolledCarousel
+                                        className="carousel-fade"
+                                        items={slides}
+                                        indicators={true}
+                                        controls={true}
+                                    /> }
+                                </CardHeader>
+                                <CardBody className="pt-0">
+                                  <CardText>Thời gian: <b>{row.startDate} đến {row.endDate}</b></CardText>
+                                  <p className="h3">{row.destinationTour}</p>
+
+
+                                  <CardText>Mã Tour:<b>{row.codeTour}</b>   </CardText>
+                                  <CardText>Nơi khởi hành:  <b>{row.startingGateTour} </b></CardText>
+                                  <p className="h4 text-danger">{row.priceAdult}đ</p>
+                                  <Button>
+                                    Chi tiết
+                                  </Button>
+                                  <CardText className="text-right">Số chỗ còn nhận:<b className="h4 text-danger">{row.numberOfPassengers}</b> </CardText>
+
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          );
+                        })}
+
+
+                      </Row> */}
                       <BootstrapTable
                         {...toolkitprops.baseProps}
                         bootstrap4
@@ -358,7 +399,7 @@ const Trip = (props) => {
               startDate: '',
               numberOfPassengers: '',
               priceAdult: '',
-              
+
               surcharge: ''
             }
           }
@@ -384,7 +425,7 @@ const Trip = (props) => {
                   values.codeTrip,
                   values.endDate,
                   values.startDate,
-                 
+
                   values.numberOfPassengers,
                   values.priceAdult,
                   values.surcharge,
@@ -438,7 +479,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="date"
+                      type="datetime-local"
                       bsSize="lg"
                       name="startDate"
                       placeholder="Enter total member"
@@ -452,7 +493,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="date"
+                      type="datetime-local"
                       bsSize="lg"
                       name="endDate"
                       placeholder="Enter total member"
@@ -540,8 +581,8 @@ const Trip = (props) => {
             {
 
               endDate: tripUpdateInfo && tripUpdateInfo.endDate !== undefined && tripUpdateInfo.endDate !== null ? tripUpdateInfo.endDate : '',
-          //  endDate:'',  
-          startDate:tripUpdateInfo && tripUpdateInfo.startDate !== undefined && tripUpdateInfo.startDate !== null ? tripUpdateInfo.startDate : '',
+              //  endDate:'',  
+              startDate: tripUpdateInfo && tripUpdateInfo.startDate !== undefined && tripUpdateInfo.startDate !== null ? tripUpdateInfo.startDate : '',
               priceAdult: tripUpdateInfo && tripUpdateInfo.priceAdult !== undefined && tripUpdateInfo.priceAdult !== null ? tripUpdateInfo.priceAdult : '',
               numberOfPassengers: tripUpdateInfo && tripUpdateInfo.numberOfPassengers !== undefined && tripUpdateInfo.numberOfPassengers !== null ? tripUpdateInfo.numberOfPassengers : '',
               surcharge: tripUpdateInfo && tripUpdateInfo.surcharge !== undefined && tripUpdateInfo.surcharge !== null ? tripUpdateInfo.surcharge : '',
@@ -551,7 +592,7 @@ const Trip = (props) => {
           }
           validationSchema={
             Yup.object({
-             
+
               numberOfPassengers: Yup.number()
                 .min(0, 'Must be greater than or equal 0 and integer')
                 .integer('Must be greater than or equal 0 and integer'),
@@ -614,7 +655,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="date"
+                      type="datetime-local"
                       bsSize="lg"
                       name="startDate"
                       placeholder="Enter total member"
@@ -628,7 +669,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="date"
+                      type="datetime-local"
                       bsSize="lg"
                       name="endDate"
                       placeholder="Enter total member"

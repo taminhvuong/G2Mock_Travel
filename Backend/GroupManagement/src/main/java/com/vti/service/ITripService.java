@@ -4,7 +4,6 @@ package com.vti.service;
 import com.vti.dto.TripFormForCreate;
 import com.vti.dto.TripFormForUpdate;
 import com.vti.dto.filter.TripFilter;
-import com.vti.entity.DetailTour;
 import com.vti.entity.Trip;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +20,5 @@ public interface ITripService {
     public void saveTrip (TripFormForCreate tripFormForCreate);
 
     public  void updateTripByCodeTrip(String codeTrip, TripFormForUpdate tripFormForUpdate);
-    public  void updateTripNumberOfPassengersByCodeTrip(String codeTrip );
+    public  void updateTripNumberOfPassengersByCodeTrip(String codeTrip ,int numberOfBuy);
 }

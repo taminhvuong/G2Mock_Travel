@@ -1,6 +1,5 @@
 package com.vti.repository;
 
-import com.vti.entity.DetailTour;
 import com.vti.entity.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

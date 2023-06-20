@@ -28,5 +28,10 @@ public class TripDto {
     private String codeTour;
     private String destinationTour;
     private int timeTour;
+    private String startingGateTour;
+    private String descriptionTour;
+    private String vehicleTour;
+    private String hotel;
+
 
 }

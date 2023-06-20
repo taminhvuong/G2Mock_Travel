@@ -12,3 +12,7 @@
 .rowPage{
     margin: 40px 0;
 }
+.flex-center {
+    display: flex;
+    justify-content: center;
+  }

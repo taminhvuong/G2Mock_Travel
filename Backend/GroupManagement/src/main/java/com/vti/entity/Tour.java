@@ -34,7 +34,6 @@ public class Tour {
     @OneToMany(mappedBy = "tour")
     private List<Trip> trips;
     
-    @OneToMany(mappedBy = "tour")
-    private List<DetailTour> detailTours;
+   
 
 }

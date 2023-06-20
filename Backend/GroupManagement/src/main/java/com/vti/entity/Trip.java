@@ -33,7 +33,10 @@ public class Trip {
     private float priceChildren;
     @Column
     private float surcharge ;
-
+    @Column
+    private String hotel ;
+    @Column
+    private String tourGuide ;
     @Column(columnDefinition = "bit default 0")
     private int status;
 

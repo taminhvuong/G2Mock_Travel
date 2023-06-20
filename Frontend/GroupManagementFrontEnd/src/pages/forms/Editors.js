@@ -35,7 +35,7 @@ const Editors = () => (
     <h1 className="h3 mb-3">Editors</h1>
 
     <Quill />
-    <Bubble />
+    {/* <Bubble /> */}
   </Container>
 );
 

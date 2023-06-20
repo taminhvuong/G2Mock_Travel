@@ -5,6 +5,7 @@ export function getListTripAction(trips, page, totalSize, minTotalMember, maxTot
     type: types.GET_LIST_TRIP,
     payload: {
       trips,
+      
       page,
       totalSize,
 
@@ -15,6 +16,12 @@ export function getListTripAction(trips, page, totalSize, minTotalMember, maxTot
       // search
       search
     }
+  };
+};
+export function getTripByCodeAction(tripByCode) {
+  return {
+    type: types.GET_TRIPBYCODE,
+    payload: tripByCode
   };
 };
 

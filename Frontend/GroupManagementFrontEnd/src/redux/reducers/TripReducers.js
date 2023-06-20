@@ -2,8 +2,9 @@ import * as types from "../constants";
 
 const initialState = {
   trips: [],
+  tripByCode:{},
   page: 1,
-  size: 5,
+  size: 9,
   totalSize: 0,
 
   // filter
@@ -31,7 +32,12 @@ export default function reducer(state = initialState, actions) {
         // search
         search: actions.payload.search
       };
-
+      case types.GET_TRIPBYCODE:
+        return {
+         
+          tripByCode: actions.payload.tripByCode,
+          
+        };
     case types.GET_LIST_TRIP_SELECTED_ROWS:
       return {
         ...state,

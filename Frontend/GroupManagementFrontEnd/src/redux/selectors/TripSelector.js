@@ -7,6 +7,9 @@ const selectTripSelector = createSelector(
     tripSelector,
     state => state.trips);
 
+const selectTripByCodeSelector = createSelector(
+    tripSelector,
+    state => state.tripByCode);
 const selectPageSelector = createSelector(
     tripSelector,
     state => state.page);
@@ -38,6 +41,9 @@ const selectSelectedRowsSelector = createSelector(
 /** function */
 export const selectTrips = (state) => {
     return selectTripSelector(state);
+}
+export const selectTripByCode = (state) => {
+    return selectTripByCodeSelector(state);
 }
 
 export const selectPage = (state) => {

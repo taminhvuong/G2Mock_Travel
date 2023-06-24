@@ -109,6 +109,16 @@ const Trip = (props) => {
       text: "Surcharge(đ)",
       sort: true
     },
+    {
+      dataField: "nameGuide",
+      text: "Name Guide",
+      sort: true
+    },
+    {
+      dataField: "phoneGuide",
+      text: "Phone Guide",
+      sort: true
+    },
 
 
     {
@@ -277,7 +287,7 @@ const Trip = (props) => {
       {/* <TableTrip trips={props.trips} tableColumns={tableColumns} >
 
       </TableTrip> */}
-      
+
       <Row>
         <Col>
           <Card>
@@ -399,12 +409,22 @@ const Trip = (props) => {
               startDate: '',
               numberOfPassengers: '',
               priceAdult: '',
-
+              nameGuide:'',
+              phoneGuide:'',
               surcharge: ''
             }
           }
           validationSchema={
             Yup.object({
+              numberOfPassengers: Yup.number()
+              .min(0, 'Must be greater than or equal 0 and integer')
+              .integer('Must be greater than or equal 0 and integer'),
+            priceAdult: Yup.number()
+              .min(0, 'Must be greater than or equal 0 and integer')
+              .integer('Must be greater than or equal 0 and integer'),
+            surcharge: Yup.number()
+              .min(0, 'Must be greater than or equal 0 and integer')
+              .integer('Must be greater than or equal 0 and integer'),
               codeTrip: Yup.string()
                 .min(6, 'Must be between 6 and 50 characters')
                 .max(50, 'Must be between 6 and 50 characters')
@@ -429,6 +449,9 @@ const Trip = (props) => {
                   values.numberOfPassengers,
                   values.priceAdult,
                   values.surcharge,
+                  values.nameGuide,
+
+                  values.phoneGuide,
                   values.codeTour);
                 // show notification
                 showSuccessNotification(
@@ -479,7 +502,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="datetime-local"
+                      type="date"
                       bsSize="lg"
                       name="startDate"
                       placeholder="Enter total member"
@@ -493,7 +516,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="datetime-local"
+                      type="date"
                       bsSize="lg"
                       name="endDate"
                       placeholder="Enter total member"
@@ -545,6 +568,63 @@ const Trip = (props) => {
                 </Row>
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
+                    <label>Name Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="nameGuide"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Phone Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="phoneGuide"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Name Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="nameGuide"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Phone Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="phoneGuide"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
                     <label>Code Tour:</label>
                   </Col>
                   <Col>
@@ -586,6 +666,9 @@ const Trip = (props) => {
               priceAdult: tripUpdateInfo && tripUpdateInfo.priceAdult !== undefined && tripUpdateInfo.priceAdult !== null ? tripUpdateInfo.priceAdult : '',
               numberOfPassengers: tripUpdateInfo && tripUpdateInfo.numberOfPassengers !== undefined && tripUpdateInfo.numberOfPassengers !== null ? tripUpdateInfo.numberOfPassengers : '',
               surcharge: tripUpdateInfo && tripUpdateInfo.surcharge !== undefined && tripUpdateInfo.surcharge !== null ? tripUpdateInfo.surcharge : '',
+              nameGuide: tripUpdateInfo && tripUpdateInfo.nameGuide !== undefined && tripUpdateInfo.nameGuide !== null ? tripUpdateInfo.nameGuide : '',
+              phoneGuide: tripUpdateInfo && tripUpdateInfo.phoneGuide !== undefined && tripUpdateInfo.phoneGuide !== null ? tripUpdateInfo.phoneGuide : '',
+
               codeTour: tripUpdateInfo && tripUpdateInfo.codeTour !== undefined && tripUpdateInfo.codeTour !== null ? tripUpdateInfo.codeTour : '',
 
             }
@@ -615,6 +698,8 @@ const Trip = (props) => {
                   values.numberOfPassengers,
                   values.priceAdult,
                   values.surcharge,
+                  values.nameGuide,
+                  values.phoneGuide,
                   values.codeTour,
 
                 );
@@ -655,7 +740,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="datetime-local"
+                      type="date"
                       bsSize="lg"
                       name="startDate"
                       placeholder="Enter total member"
@@ -669,7 +754,7 @@ const Trip = (props) => {
                   </Col>
                   <Col>
                     <FastField
-                      type="datetime-local"
+                      type="date"
                       bsSize="lg"
                       name="endDate"
                       placeholder="Enter total member"
@@ -715,6 +800,34 @@ const Trip = (props) => {
                       bsSize="lg"
                       name="surcharge"
                       placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Name Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="nameGuide"
+                      placeholder="Enter code tour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Phone Guide:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="phoneGuide"
+                      placeholder="Enter code tour"
                       component={ReactstrapInput}
                     />
                   </Col>

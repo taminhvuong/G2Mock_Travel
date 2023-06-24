@@ -22,7 +22,10 @@ public class TourDTO {
 
     private int tourTime;
 
-    private String img ;
+    private String img1 ;
+    private String img2 ;
+    private String img3 ;
+    private String img4 ;
     private String destination;
 
 }

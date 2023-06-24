@@ -5,8 +5,10 @@ import com.vti.dto.BookingFormForUpdate;
 import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
 import com.vti.entity.Trip;
+import com.vti.entity.User;
 import com.vti.repository.BookingRespository;
 import com.vti.repository.TripRepository;
+import com.vti.repository.UserRepository;
 import com.vti.specification.BookingSpecificationBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class BookingService implements IBookingService {
 
     @Autowired
     private BookingRespository bookingRespository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private TripRepository tripRepository;
     @Autowired
@@ -49,7 +53,11 @@ public class BookingService implements IBookingService {
     public void saveBooking(BookingFormForCreate bookingFormForCreate) {
         Trip trip=tripRepository.findByCodeTrip(bookingFormForCreate.getCodeTrip());
         Booking booking = modelMapper.map(bookingFormForCreate, Booking.class);
-        booking.setTrip(trip);
+User user=userRepository.findByUserName(bookingFormForCreate.getNameUser());
+        if(bookingFormForCreate.getCodeTrip()!=null){
+            booking.setTrip(trip);
+            booking.setUser(user);
+        }
         int numberOfBuy=bookingFormForCreate.getNumberAdult()+bookingFormForCreate.getNumberChildren();
         tripService.updateTripNumberOfPassengersByCodeTrip(trip.getCodeTrip(),numberOfBuy);
         bookingRespository.save(booking);

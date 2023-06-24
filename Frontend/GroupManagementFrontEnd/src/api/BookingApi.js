@@ -1,8 +1,8 @@
 import Api from './Api';
 
-const url = "/trips";
+const url = "/bookings";
 
-const getAll = (page = 1, size = 10, sortField = 'codeTrip', sortType = 'desc', search = '', minTotalMember, maxTotalMember) => {
+const getAll = (page = 1, size = 10, sortField = 'codeTrip', sortType = 'desc', search = '') => {
 
     const parameters = {
         page,
@@ -27,37 +27,33 @@ const getAll = (page = 1, size = 10, sortField = 'codeTrip', sortType = 'desc', 
     return Api.get(`${url}`, { params: parameters });
 };
 
-const existsByName = (name) => {
-    return Api.get(`${url}/codeTrip/${name}`);
-};
+
 
 const create = (
+    fullName,
+    phone,
+    email,
+    address,
+    numberAdult,
+    numberChildren,
+    totalPrice,
+    nameUser,
     codeTrip,
-    endDate,
-    startDate,
-    numberOfPassengers,
-    priceAdult,
-    surcharge,
-    nameGuide,
-
-    phoneGuide,
-    codeTour) => {
+    ) => {
 
     const body = {
+        fullName,
+        phone,
+        email,
+        address,
+        numberAdult,
+        numberChildren,
+        totalPrice,
+        nameUser,
         codeTrip,
-        endDate,
-        startDate,
-        numberOfPassengers,
-
-        priceAdult,
-        surcharge,
-        nameGuide,
-
-        phoneGuide,
-        codeTour,
     }
 
-    return Api.post(url, body);
+    return Api.post(`${url}/save`, body);
 };
 
 const getById = (codeTrip) => {
@@ -67,19 +63,14 @@ const getById = (codeTrip) => {
 //     return Api.get(`${url}/getDetailTour/${codeTrip}`);
 // };
 
-const update = (codeTrip, endDate, startDate, numberOfPassengers, priceAdult, surcharge, nameGuide,
-
-    phoneGuide, codeTour) => {
+const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge, codeTour) => {
 
     const body = {
         endDate,
         startDate,
         numberOfPassengers,
         priceAdult,
-        surcharge,
-        nameGuide,
-
-        phoneGuide,
+        surcharge, 
         codeTour
     }
 
@@ -87,10 +78,10 @@ const update = (codeTrip, endDate, startDate, numberOfPassengers, priceAdult, su
 };
 
 const deleteByIds = (ids) => {
-
+    
     return Api.delete(`${url}/deleteList/${ids.toString()}`);
 };
 
 // export
-const api = { getAll, existsByName, create, getById, update, deleteByIds }
+const api = { getAll, create, getById, update, deleteByIds }
 export default api;

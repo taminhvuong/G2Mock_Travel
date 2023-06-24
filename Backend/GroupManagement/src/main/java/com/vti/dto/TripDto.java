@@ -3,6 +3,7 @@ package com.vti.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -23,7 +24,9 @@ public class TripDto {
     private float priceChildren ;
 
     private float surcharge ;
+    private String nameGuide ;
 
+    private String phoneGuide ;
 
     private String codeTour;
     private String destinationTour;

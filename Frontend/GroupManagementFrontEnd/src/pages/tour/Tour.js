@@ -74,17 +74,21 @@ const Tour = (props) => {
       text: "Vehicle",
       sort: true
     },
-    {
-      dataField: "description",
-      text: "Description",
-      sort: true
-    },
+    // {
+    //   dataField: "description",
+    //   text: "Description",
+    //   sort: true
+    // },
     {
         dataField: "tourTime",
         text: "Tour Time (Day)",
         sort: true
       },
-
+      {
+        dataField: "img",
+        text: "Image",
+        sort: true
+      },
 
     {
       dataField: "action",

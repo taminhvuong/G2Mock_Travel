@@ -24,19 +24,21 @@ public class Trip {
     private Date startDate;
     @Column
     private Date endDate;
-    @Column
+    @Column(columnDefinition = "int unsigned")
     private int numberOfPassengers;
-    @Column
+    @Column(columnDefinition = "int unsigned")
     private float priceAdult ;
 
     @Formula(" priceAdult / 100 *75")
     private float priceChildren;
-    @Column
+    @Column(columnDefinition = "int unsigned")
     private float surcharge ;
     @Column
     private String hotel ;
     @Column
-    private String tourGuide ;
+    private String nameGuide ;
+    @Column
+    private String phoneGuide ;
     @Column(columnDefinition = "bit default 0")
     private int status;
 

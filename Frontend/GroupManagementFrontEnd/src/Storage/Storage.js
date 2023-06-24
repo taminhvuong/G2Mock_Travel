@@ -36,7 +36,8 @@ const getToken = () => {
     return getItem('token');
 };
 
-const setUserInfo = (userName, email, firstName, lastName, role, status) => {
+const setUserInfo = (id, userName, email, firstName, lastName, role, status) => {
+    setItem('id', id);
     setItem('userName', userName);
     setItem('email', email);
     setItem('firstName', firstName);
@@ -47,6 +48,7 @@ const setUserInfo = (userName, email, firstName, lastName, role, status) => {
 
 const getUserInfo = () => {
     return {
+        'id': getItem('id'),
         'userName': getItem('userName'),
         'email': getItem('email'),
         'firstName': getItem('firstName'),

@@ -35,10 +35,10 @@ import ThemeCorporate from "../pages/layouts/ThemeCorporate";
 import ThemeModern from "../pages/layouts/ThemeModern";
 
 // Misc
-import Blank from "../pages/misc/Blank";
+// import Blank from "../pages/misc/Blank";
 
 // UI Elements
-import Carousel from "../pages/ui-elements/Carousel";
+// import Carousel from "../pages/ui-elements/Carousel";
 import Tabs from "../pages/ui-elements/Tabs";
 
 
@@ -73,6 +73,7 @@ const TripUI = async(() => import("../pages/trip/TripUI"));
 const Tour = async(() => import("../pages/tour/Tour"));
 const DetailTrip = async(() => import("../pages/trip/DetailTrip"));
 const Booking = async(() => import("../pages/booking/Booking.js"));
+const BookingManagement = async(() => import("../pages/booking/BookingManagement.js"));
 const TripWYSIWYG = async(() => import("../pages/trip/TripManagement.js"));
 
 //Routes
@@ -120,6 +121,15 @@ const tripRoutes = {
   name: "Trip  Management ",
   icon: Bellicon,
   component: withAuth(Trip),
+  children: null
+
+
+};
+const BookingRoutes = {
+  path: "/bookings",
+  name: "Booking  Management ",
+  icon: Bellicon,
+  component: withAuth(BookingManagement),
   children: null
 
 
@@ -250,11 +260,7 @@ const uiRoutes = {
   icon: GridIcon,
   children: [
 
-    {
-      path: "/ui/carousel",
-      name: "Carousel",
-      component: Carousel
-    },
+
 
 
 
@@ -292,17 +298,17 @@ const formPluginsRoutes = {
 };
 
 
-const privateRoutes = {
-  path: "/private",
-  name: "Private",
-  children: [
-    {
-      path: "/private/blank",
-      name: "Blank Page",
-      component: Blank
-    }
-  ]
-};
+// const privateRoutes = {
+//   path: "/private",
+//   name: "Private",
+//   children: [
+//     {
+//       path: "/private/blank",
+//       name: "Blank Page",
+//       component: Blank
+//     }
+//   ]
+// };
 
 // This route is not visisble in the sidebar
 const ProfileRoutes = {
@@ -333,7 +339,7 @@ export const dashboard = [
   layoutRoutes,
   uiRoutes,
   formPluginsRoutes,
-  privateRoutes,
+  BookingRoutes,
   ProfileRoutes,
   SettingsRoutes,
   TripManagementRoute
@@ -348,14 +354,12 @@ export const page = [authRoutes];
 // All routes
 export default [
   dashboardRoutes,
-  // groupRoutes,
   tripUi,
-  bookingRoute,
-  tripRoutes,
   tourRoutes,
+  tripRoutes,
+  BookingRoutes,
   pageRoutes,
   authRoutes,
-
   uiRoutes,
   formPluginsRoutes,
 

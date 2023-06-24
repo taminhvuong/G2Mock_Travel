@@ -29,5 +29,8 @@ public class TripFormForCreate {
 
     private int status;
     private int likeTrip;
+    private String nameGuide ;
+
+    private String phoneGuide ;
     private String codeTour;
 }

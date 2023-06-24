@@ -11,7 +11,7 @@ import {
     Button,
     Container,
     Row,
-   
+
 } from "reactstrap";
 
 import {
@@ -38,7 +38,7 @@ export default function DetailTrip(props) {
         {
         }
     );
-   
+
     useEffect(() => {
 
         getTripByCode(codeTrip)
@@ -50,7 +50,7 @@ export default function DetailTrip(props) {
     const getTripByCode = React.useCallback(async (codeTrip) => {
         let res = await TripApi.getById(codeTrip);
         setTripByCodeTrio(res)
-        
+
         console.log(res)
     }, [])
 
@@ -58,7 +58,7 @@ export default function DetailTrip(props) {
         <>
             <Container>
                 <Row className="rowTitle m-4">
-                    
+
                     <Col lg="8">
                         <h2>{tripByCodeTrio.destinationTour}({tripByCodeTrio.hotel})</h2>
                         <Button >Like</Button>
@@ -70,11 +70,11 @@ export default function DetailTrip(props) {
                 </Row>
                 <Row className="rowImg m-4">
                     <Col lg="7" className="flex-center">
-                    
-                    <img src="https://media.travel.com.vn/tour/tfd_230420052439_028008.jpg" className="img-fluid" alt="image" />
+
+                        <img src="https://media.travel.com.vn/tour/tfd_230420052439_028008.jpg" className="img-fluid" alt="image" />
 
                     </Col>
-                    <Col lg="5"   className="flex-center">
+                    <Col lg="5" className="flex-center">
                         <Row >
                             <Col lg="12">
                                 <Row className="">
@@ -138,18 +138,19 @@ export default function DetailTrip(props) {
                     </Col>
 
                 </Row>
+                <h3 className='text-center'>Lịch trình</h3>
+                {/* <hr width="80%" /> */}
                 <Row className="rowLoTrinh m-4">
-                    <h3 className='text-center'>Lịch trình</h3>
-                    <hr width="50%" />
-                    <Col lg="3">
+
+                    {/* <Col lg="3">
                         <Card className="p-3">
                             <CardTitle>Thông tin lịch trình</CardTitle>
                            
                         </Card>
-                    </Col>
-                    <Col lg="9">
+                    </Col> */}
+                    <Col >
                         <Card className="p-3">
-                            <CardTitle>Chi tiết lịch trình</CardTitle>
+                            <CardText tag="h4">Chi tiết lịch trình</CardText>
                             <CardText>{tripByCodeTrio.descriptionTour}</CardText>
                         </Card>
                     </Col>
@@ -157,12 +158,14 @@ export default function DetailTrip(props) {
                 <Row className="rowGia m-4 font-weight-bolder">
                     <Col lg="5">
                         <Card className="p-2">
-                            <CardTitle>Thông tin phương tiện</CardTitle>
+                            <CardText tag="h4">Thông tin hướng dẫn viên</CardText>
+                            <CardText>HDV : {(tripByCodeTrio.nameGuide !==null )? (tripByCodeTrio.nameGuide):("Đang cập nhập")}</CardText>
+                            <CardText>Số điện thoại :{(tripByCodeTrio.phoneGuide !==null )? (tripByCodeTrio.phoneGuide):("Đang cập nhập")}</CardText>
                         </Card>
                     </Col>
                     <Col lg="7">
                         <Card className="p-2">
-                            <CardTitle>Giá phòng & phụ thu</CardTitle>
+                            <CardText tag="h4">Giá phòng & phụ thu</CardText>
                             <Table borderless>
                                 <thead>
                                     <tr>
@@ -172,18 +175,18 @@ export default function DetailTrip(props) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                       
+
                                         <td>Người lớn</td>
                                         <td>{tripByCodeTrio.priceAdult} đ</td>
                                     </tr>
                                     <tr>
-                                       
+
                                         <td>Trẻ em</td>
                                         <td>{tripByCodeTrio.priceChildren} đ</td>
                                     </tr>
                                     <tr>
-                                        
-                                        <td>Phụ thu phong đơn</td>
+
+                                        <td>Phụ thu phòng đơn</td>
                                         <td>{tripByCodeTrio.surcharge} đ</td>
                                     </tr>
                                 </tbody>

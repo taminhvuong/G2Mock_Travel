@@ -15,4 +15,5 @@ public class TourFormForCreate {
     private int tourTime;
 
     private String destination;
+
 }

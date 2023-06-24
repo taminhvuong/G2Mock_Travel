@@ -82,30 +82,33 @@ public class TripService implements ITripService {
     public void updateTripByCodeTrip(String codeTrip, TripFormForUpdate formUpdateTour) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
         System.out.println(trip.getCodeTrip());
-        if(formUpdateTour.getCodeTour()!=null){
-            Tour tour=tourRepository.findByCodeTour(formUpdateTour.getCodeTour());
-            trip.setTour(tour);
-            trip.setPriceAdult(formUpdateTour.getPriceAdult());
-            trip.setEndDate(formUpdateTour.getEndDate());
-            trip.setStartDate(formUpdateTour.getStartDate());
-            trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
-//            trip = modelMapper.map(formUpdateTour, Trip.class);
-            tripRepository.save(trip);
-        }
-        else {
+        Tour tour=tourRepository.findByCodeTour(formUpdateTour.getCodeTour());
 
-            trip.setPriceAdult(formUpdateTour.getPriceAdult());
-            trip.setEndDate(formUpdateTour.getEndDate());
-            trip.setStartDate(formUpdateTour.getStartDate());
-            trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
-            tripRepository.save(trip);
+        trip.setPriceAdult(formUpdateTour.getPriceAdult());
+        trip.setEndDate(formUpdateTour.getEndDate());
+        trip.setStartDate(formUpdateTour.getStartDate());
+        trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
+        trip.setNameGuide(formUpdateTour.getNameGuide());
+        trip.setPhoneGuide(formUpdateTour.getPhoneGuide());
+        if(formUpdateTour.getCodeTour()!=null){
+            trip.setTour(tour);
+//            trip = modelMapper.map(formUpdateTour, Trip.class);
+
         }
+        tripRepository.save(trip);
+
 
     }
 
     @Override
     public void updateTripNumberOfPassengersByCodeTrip(String codeTrip,int numberOfBuy) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
-        trip.setNumberOfPassengers(trip.getNumberOfPassengers() -  numberOfBuy);
+        if(numberOfBuy>trip.getNumberOfPassengers()){
+
+        }
+        else{
+            trip.setNumberOfPassengers(trip.getNumberOfPassengers() -  numberOfBuy);
+
+        }
     }
 }

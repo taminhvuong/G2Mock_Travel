@@ -16,8 +16,9 @@ public class BookingFormForCreate {
     private int numberAdult;
 
     private int numberChildren;
+    private Long totalPrice;
 
-
+    private String nameUser;
 
     private String codeTrip;
 }

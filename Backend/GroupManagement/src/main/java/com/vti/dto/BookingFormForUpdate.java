@@ -14,6 +14,7 @@ public class BookingFormForUpdate {
     private String address;
 
     private int numberAdult;
+    private Long  totalPrice;
 
     private int numberChildren;
 

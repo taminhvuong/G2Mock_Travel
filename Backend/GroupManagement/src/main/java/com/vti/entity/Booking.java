@@ -28,7 +28,7 @@ public class Booking {
     @Column
     private int numberChildren;
     @Column
-    private Long  priceAll;
+    private Long  totalPrice;
     @ManyToOne
     @JoinColumn(name = "userId",nullable = false)
     private User user;

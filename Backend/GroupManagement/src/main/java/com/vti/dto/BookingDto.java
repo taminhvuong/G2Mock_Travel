@@ -20,8 +20,8 @@ public class BookingDto {
 
     private int numberChildren;
 
-    private Long  priceAll;
 
+    private Long  totalPrice;
     private String codeTrip;
 
     private Date startDate;

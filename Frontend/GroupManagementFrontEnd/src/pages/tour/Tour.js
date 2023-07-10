@@ -12,7 +12,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
-
+import CKEditor from "./Ckeditor";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { selectTours, selectPage, selectSelectedRows, selectSize, selectTotalSize } from "../../redux/selectors/TourSelector";
@@ -22,7 +22,7 @@ import TourApi from '../../api/TourApi';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import CustomSearch from "./CustomSearch";
 import * as Icon from 'react-feather';
-import CustomFilter from "./CustomFilter";
+// import CustomFilter from "./CustomFilter";
 import { FastField, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
@@ -37,9 +37,9 @@ const Tour = (props) => {
   useEffect(() => {
     const getAllTour = async () => {
       const result = await TourApi.getAll(1, size);
-      const trips = result.content;
+      const tours = result.content;
       const totalSize = result.totalElements;
-      getListTour(trips, 1, totalSize);
+      getListTour(tours, 1, totalSize);
     }
     getAllTour();
   }, [getListTour, size]);
@@ -57,7 +57,7 @@ const Tour = (props) => {
       text: "CodeTour",
       sort: true
     },
-   
+
 
     {
       dataField: "destination",
@@ -80,15 +80,15 @@ const Tour = (props) => {
     //   sort: true
     // },
     {
-        dataField: "tourTime",
-        text: "Tour Time (Day)",
-        sort: true
-      },
-      {
-        dataField: "img",
-        text: "Image",
-        sort: true
-      },
+      dataField: "tourTime",
+      text: "Tour Time (Day)",
+      sort: true
+    },
+    {
+      dataField: "img",
+      text: "Image",
+      sort: true
+    },
 
     {
       dataField: "action",
@@ -102,6 +102,7 @@ const Tour = (props) => {
       },
     }
   ];
+  const [dataCKeditor, setDataCKeditor] = useState("");
 
   const handleTableChange = async (type, { page, sortField, sortOrder, searchText }) => {
     // sort
@@ -111,12 +112,12 @@ const Tour = (props) => {
     }
 
     // filter
-   
+
 
     const result = await TourApi.getAll(page, size, sortField, sortOrder, searchText);
-    const trips = result.content;
+    const tours = result.content;
     const totalSize = result.totalElements;
-    getListTour(trips, page, totalSize, searchText);
+    getListTour(tours, page, totalSize, searchText);
   }
 
   // filter
@@ -124,7 +125,7 @@ const Tour = (props) => {
 
   const handleChangeFilter = () => {
     onTotalMemberFilter({
-    
+
     });
   }
 
@@ -171,12 +172,12 @@ const Tour = (props) => {
     toastr.error(title, message, options);
   }
   // update trip
-  const [tripUpdateInfo, setTourUpdateInfo] = useState();
+  const [tourUpdateInfo, setTourUpdateInfo] = useState();
 
   const updateTour = async (codeTour) => {
     setOpenModalUpdate(true);
-    const tripInfo = await TourApi.getById(codeTour);
-    setTourUpdateInfo(tripInfo);
+    const tourInfo = await TourApi.getById(codeTour);
+    setTourUpdateInfo(tourInfo);
   }
 
   const [isOpenModalUpdate, setOpenModalUpdate] = useState(false);
@@ -211,7 +212,7 @@ const Tour = (props) => {
 
   const deleteTour = async () => {
     let answer = window.confirm(`Bạn có chắc muốn Xóa: ${props.selectedRows}`)
-    if(answer){
+    if (answer) {
       if (props.selectedRows.length !== 0) {
         try {
           await TourApi.deleteByIds(props.selectedRows);
@@ -227,13 +228,13 @@ const Tour = (props) => {
       } else {
         showErrorNotification(
           "Delete Tour",
-          "You must select trips"
+          "You must select tours"
         );
       }
     }
     else
-    return;
-   
+      return;
+
   }
 
   return (
@@ -245,7 +246,7 @@ const Tour = (props) => {
             <CardBody>
               <ToolkitProvider
                 keyField="codeTour"
-                data={props.trips}
+                data={props.tours}
                 columns={tableColumns}
                 search
               >
@@ -256,7 +257,7 @@ const Tour = (props) => {
                       {isVisiableFilter &&
                         <Row>
                           <Col lg="12">
-                            <CustomFilter handleChangeFilter={handleChangeFilter} />
+                            {/* <CustomFilter handleChangeFilter={handleChangeFilter} /> */}
                           </Col>
                         </Row>
                       }
@@ -314,13 +315,14 @@ const Tour = (props) => {
         <Formik
           initialValues={
             {
-              codeTour: '',
-              endDate: '',
-              startDate: '',
-              numberOfPassengers: '',
-              priceAdult: '',
-              
-              surcharge: ''
+              codeTour: "",
+              description: "",
+              destination: "",
+
+              startingGate: "",
+              tourTime: "",
+              vehicle: "",
+
             }
           }
           validationSchema={
@@ -329,11 +331,12 @@ const Tour = (props) => {
                 .min(6, 'Must be between 6 and 50 characters')
                 .max(50, 'Must be between 6 and 50 characters')
                 .required('Required')
-                .test('checkUniqueName', 'This name is already registered.', async codeTour => {
-                  // call api
-                  const isExists = await TourApi.existsByName(codeTour);
-                  return !isExists;
-                }),
+              // .test('checkUniqueName', 'This name is already registered.', async codeTour => {
+              //   // call api
+              //   const isExists = await TourApi.existsByName(codeTour);
+              //   return !isExists;
+              // })
+              ,
             })
           }
 
@@ -343,13 +346,12 @@ const Tour = (props) => {
                 await TourApi.create(
 
                   values.codeTour,
-                  values.endDate,
-                  values.startDate,
-                 
-                  values.numberOfPassengers,
-                  values.priceAdult,
-                  values.surcharge,
-                  values.codeTour);
+                  dataCKeditor,
+                  values.destination,
+
+                  values.startingGate,
+                  values.tourTime,
+                  values.vehicle,);
                 // show notification
                 showSuccessNotification(
                   "Create Tour",
@@ -381,7 +383,7 @@ const Tour = (props) => {
 
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Code Tour:</label>
+                    <label>Mã Tour:</label>
                   </Col>
                   <Col>
                     <FastField
@@ -395,88 +397,70 @@ const Tour = (props) => {
                 </Row>
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Start Date:</label>
+                    <label>Mô tả lịch trình:</label>
                   </Col>
                   <Col>
-                    <FastField
-                      type="date"
-                      bsSize="lg"
-                      name="startDate"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
+                    <CKEditor dataCKeditor={dataCKeditor} setDataCKeditor={setDataCKeditor} ></CKEditor>
+
                   </Col>
                 </Row>
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>End Date:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="date"
-                      bsSize="lg"
-                      name="endDate"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>NumberOfPassengersr:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="numberOfPassengers"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>Price Adult:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="priceAdult"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>Surcharge:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="surcharge"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>Code Tour:</label>
+                    <label>Lộ trình:</label>
                   </Col>
                   <Col>
                     <FastField
                       type="text"
                       bsSize="lg"
-                      name="codeTour"
-                      placeholder="Enter code tour"
+                      name="destination"
+                      placeholder="Enter total member"
                       component={ReactstrapInput}
                     />
                   </Col>
                 </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Nơi khởi hành:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="startingGate"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Thời giant:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="number"
+                      bsSize="lg"
+                      name="tourTime"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Phương tiện:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="vehicle"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+
               </ModalBody>
 
               {/* footer */}
@@ -499,29 +483,35 @@ const Tour = (props) => {
           enableReinitialize
           initialValues={
             {
+              // codeTour: "",
+              // description: "",
+              // destination: "",
 
-              endDate: tripUpdateInfo && tripUpdateInfo.endDate !== undefined && tripUpdateInfo.endDate !== null ? tripUpdateInfo.endDate : '',
-          //  endDate:'',  
-          startDate:tripUpdateInfo && tripUpdateInfo.startDate !== undefined && tripUpdateInfo.startDate !== null ? tripUpdateInfo.startDate : '',
-              priceAdult: tripUpdateInfo && tripUpdateInfo.priceAdult !== undefined && tripUpdateInfo.priceAdult !== null ? tripUpdateInfo.priceAdult : '',
-              numberOfPassengers: tripUpdateInfo && tripUpdateInfo.numberOfPassengers !== undefined && tripUpdateInfo.numberOfPassengers !== null ? tripUpdateInfo.numberOfPassengers : '',
-              surcharge: tripUpdateInfo && tripUpdateInfo.surcharge !== undefined && tripUpdateInfo.surcharge !== null ? tripUpdateInfo.surcharge : '',
-              codeTour: tripUpdateInfo && tripUpdateInfo.codeTour !== undefined && tripUpdateInfo.codeTour !== null ? tripUpdateInfo.codeTour : '',
+              // startingGate: "",
+              // tourTime: "",
+              // vehicle: "",
+
+              codeTour: tourUpdateInfo && tourUpdateInfo.codeTour !== undefined && tourUpdateInfo.codeTour !== null ? tourUpdateInfo.codeTour : '', 
+              description: tourUpdateInfo && tourUpdateInfo.description !== undefined && tourUpdateInfo.description !== null ? tourUpdateInfo.description : '',
+              destination: tourUpdateInfo && tourUpdateInfo.destination !== undefined && tourUpdateInfo.destination !== null ? tourUpdateInfo.destination : '',
+              startingGate: tourUpdateInfo && tourUpdateInfo.startingGate !== undefined && tourUpdateInfo.startingGate !== null ? tourUpdateInfo.startingGate : '',
+              tourTime: tourUpdateInfo && tourUpdateInfo.tourTime !== undefined && tourUpdateInfo.tourTime !== null ? tourUpdateInfo.tourTime : '',
+              vehicle: tourUpdateInfo && tourUpdateInfo.vehicle !== undefined && tourUpdateInfo.vehicle !== null ? tourUpdateInfo.vehicle : '',
 
             }
           }
           validationSchema={
             Yup.object({
-             
-              numberOfPassengers: Yup.number()
+
+              tourTime: Yup.number()
                 .min(0, 'Must be greater than or equal 0 and integer')
                 .integer('Must be greater than or equal 0 and integer'),
-              priceAdult: Yup.number()
-                .min(0, 'Must be greater than or equal 0 and integer')
-                .integer('Must be greater than or equal 0 and integer'),
-              surcharge: Yup.number()
-                .min(0, 'Must be greater than or equal 0 and integer')
-                .integer('Must be greater than or equal 0 and integer')
+              // priceAdult: Yup.number()
+              //   .min(0, 'Must be greater than or equal 0 and integer')
+              //   .integer('Must be greater than or equal 0 and integer'),
+              // surcharge: Yup.number()
+              //   .min(0, 'Must be greater than or equal 0 and integer')
+              //   .integer('Must be greater than or equal 0 and integer')
             })
           }
 
@@ -529,14 +519,13 @@ const Tour = (props) => {
             async values => {
               try {
                 await TourApi.update(
-                  tripUpdateInfo.codeTour,
-                  values.endDate,
-                  values.startDate,
-                  values.numberOfPassengers,
-                  values.priceAdult,
-                  values.surcharge,
-                  values.codeTour,
+                  tourUpdateInfo.codeTour,
+                  dataCKeditor,
+                  values.destination,
 
+                  values.startingGate,
+                  values.tourTime,
+                  values.vehicle,
                 );
                 // show notification
                 showSuccessNotification(
@@ -546,10 +535,12 @@ const Tour = (props) => {
                 // close modal
                 setOpenModalUpdate(false);
                 // Refresh table
+                setDataCKeditor("")
                 refreshForm();
               } catch (error) {
                 console.log(error);
                 setOpenModalUpdate(false);
+                
                 // redirect page error server
                 props.history.push("/auth/500");
               }
@@ -569,85 +560,80 @@ const Tour = (props) => {
 
 
 
-                <Row style={{ alignItems: "center" }}>
+              <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Start_date:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="date"
-                      bsSize="lg"
-                      name="startDate"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>End_date:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="date"
-                      bsSize="lg"
-                      name="endDate"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>numberOfPassengers:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="numberOfPassengers"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>priceAdult:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="priceAdult"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>Surcharge:</label>
-                  </Col>
-                  <Col>
-                    <FastField
-                      type="number"
-                      bsSize="lg"
-                      name="surcharge"
-                      placeholder="Enter total member"
-                      component={ReactstrapInput}
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <Col lg="auto">
-                    <label>Code Tour:</label>
+                    <label>Mã Tour:</label>
                   </Col>
                   <Col>
                     <FastField
                       type="text"
                       bsSize="lg"
                       name="codeTour"
+                      placeholder="Enter trip codeTour"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Mô tả lịch trình:</label>
+                  </Col>
+                  <Col>
+                    <CKEditor dataCKeditor={dataCKeditor} setDataCKeditor={setDataCKeditor} ></CKEditor>
+
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Lộ trình:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="destination"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Nơi khởi hành:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="startingGate"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Thời giant:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="number"
+                      bsSize="lg"
+                      name="tourTime"
+                      placeholder="Enter total member"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Phương tiện:</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="vehicle"
                       placeholder="Enter total member"
                       component={ReactstrapInput}
                     />
@@ -661,7 +647,7 @@ const Tour = (props) => {
                   Save
                 </Button>{" "}
 
-                <Button color="primary" onClick={() => setOpenModalUpdate(false)}>
+                <Button color="primary" onClick={() =>{ setOpenModalUpdate(false);setDataCKeditor("")}}>
                   Close
                 </Button>
               </ModalFooter>
@@ -676,7 +662,7 @@ const Tour = (props) => {
 
 const mapGlobalStateToProps = state => {
   return {
-    trips: selectTours(state),
+    tours: selectTours(state),
     page: selectPage(state),
     size: selectSize(state),
     totalSize: selectTotalSize(state),

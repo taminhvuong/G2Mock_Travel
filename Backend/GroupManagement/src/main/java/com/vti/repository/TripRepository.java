@@ -1,6 +1,9 @@
 package com.vti.repository;
 
 import com.vti.entity.Trip;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,6 +15,7 @@ import java.util.List;
 
 public interface TripRepository extends JpaRepository<Trip, String>, JpaSpecificationExecutor<Trip> {
     Trip findByCodeTrip(String codeTrip);
+
 
     List<Trip> findAll();
 
@@ -34,5 +38,6 @@ public interface TripRepository extends JpaRepository<Trip, String>, JpaSpecific
     @Query("delete from Trip where codeTrip IN (:codeTrips)")
     public void deleteByListCodeTrip(@Param("codeTrips") List<String> codeTrips);
 
-
+//    @Query("from Trip where status =: status ")
+//    Page<Trip> findByStatus( @Param("status") int status, Specification<Trip> build, Pageable pageable);
 }

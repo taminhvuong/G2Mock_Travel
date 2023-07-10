@@ -1,4 +1,5 @@
 import Api from './Api';
+import storage from '../Storage/Storage';
 
 const url = "/bookings";
 
@@ -15,28 +16,24 @@ const getAll = (page = 1, size = 10, sortField = 'codeTrip', sortType = 'desc', 
         parameters.search = search;
     }
 
-    // filter
-    // if (minTotalMember !== null && minTotalMember !== undefined) {
-    //     parameters.minTotalMember = minTotalMember;
-    // }
-
-    // if (maxTotalMember !== null && maxTotalMember !== undefined) {
-    //     parameters.maxTotalMember = maxTotalMember;
-    // }
+   
 
     return Api.get(`${url}`, { params: parameters });
 };
 
-
+const getBookingByUser = (status) => {
+    return Api.get(`${url}/getByUser/${storage.getUserInfo().userName}&${status}`);
+};
 
 const create = (
     fullName,
     phone,
     email,
+    destination,
     address,
     numberAdult,
     numberChildren,
-    totalPrice,
+    // totalPrice,
     nameUser,
     codeTrip,
     ) => {
@@ -45,10 +42,11 @@ const create = (
         fullName,
         phone,
         email,
+        destination,
         address,
         numberAdult,
         numberChildren,
-        totalPrice,
+        // totalPrice,
         nameUser,
         codeTrip,
     }
@@ -59,9 +57,7 @@ const create = (
 const getById = (codeTrip) => {
     return Api.get(`${url}/${codeTrip}`);
 };
-// const getDetailByCodeTrip = (codeTrip) => {
-//     return Api.get(`${url}/getDetailTour/${codeTrip}`);
-// };
+
 
 const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge, codeTour) => {
 
@@ -83,5 +79,5 @@ const deleteByIds = (ids) => {
 };
 
 // export
-const api = { getAll, create, getById, update, deleteByIds }
+const api = { getAll, create, getById, update, deleteByIds,getBookingByUser }
 export default api;

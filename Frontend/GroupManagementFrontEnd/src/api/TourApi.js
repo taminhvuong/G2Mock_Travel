@@ -31,53 +31,58 @@ const getAll = (page = 1, size = 10, sortField = 'codeTour', sortType = 'desc', 
 //     return Api.get(`${url}/codeTrip/${name}`);
 // };
 
-// const create = (
-//      codeTrip,
-//     endDate,
-//     startDate,
-//     numberOfPassengers,
-//     priceAdult,
-//     surcharge,
-//     codeTour) => {
+const create = (
+    codeTour,
+    description,
+    destination,
 
-//     const body = {
-//         codeTrip,
-//         endDate,
-//         startDate,
-//         numberOfPassengers,
-        
-//         priceAdult,
-//         surcharge,
-//         codeTour,
-//     }
+    startingGate,
+    tourTime,
+    vehicle) => {
 
-//     return Api.post(url, body);
-// };
+    const body = {
+        codeTour,
+        description,
+        destination,
 
-// const getById = (codeTrip) => {
-//     return Api.get(`${url}/${codeTrip}`);
-// };
+        startingGate,
+        tourTime,
+        vehicle,
+    }
 
-// const update = (codeTrip,endDate,startDate,numberOfPassengers,priceAdult,surcharge, codeTour) => {
+    return Api.post(url, body);
+};
 
-//     const body = {
-//         endDate,
-//         startDate,
-//         numberOfPassengers,
-//         priceAdult,
-//         surcharge, 
-//         codeTour
-//     }
+const getById = (codeTour) => {
+    return Api.get(`${url}/${codeTour}`);
+};
 
-//     return Api.put(`${url}/${codeTrip}`, body);
-// };
+const update = (codeTour,
+    description,
+    destination,
+
+    startingGate,
+    tourTime,
+    vehicle) => {
+
+    const body = {
+        description,
+    destination,
+
+    startingGate,
+    tourTime,
+    vehicle
+    }
+
+    return Api.put(`${url}/${codeTour}`, body);
+};
 
 // const deleteByIds = (ids) => {
-    
+
 //     return Api.delete(`${url}/deleteList/${ids.toString()}`);
 // };
 
 // export
 //const api = { getAll, existsByName, create, getById, update, deleteByIds }
-const api = { getAll}
+const api = { getAll ,create,getById,update}
 export default api;

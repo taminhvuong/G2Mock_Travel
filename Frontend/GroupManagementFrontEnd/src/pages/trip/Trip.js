@@ -52,7 +52,7 @@ const Trip = (props) => {
   const actionFormatterWatch = (cell, row, rowIndex) => {
 
     return (
-      <Button size={16} className="" onClick={() => props.history.push(`/detailTrip/${row.codeTrip}`)}>Detail</Button>
+      <Button  className="" onClick={() => props.history.push(`/detailTrip/${row.codeTrip}`)}>Detail</Button>
     );
   };
   const actionFormatter = (cell, row, rowIndex) => {
@@ -322,45 +322,7 @@ const Trip = (props) => {
                           </div>
                         </Col>
                       </Row>
-                      {/* <Row
-
-
-                        data={props.trips}>
-                        <h1 className="h3 mb-3 text-center">Danh sách tour du lịch</h1>
-                        {props.trips.map((row, index) => {
-
-                          return (
-                            <Col lg="4" >
-                              <Card >
-                                <CardHeader>
-                                  { <UncontrolledCarousel
-                                        className="carousel-fade"
-                                        items={slides}
-                                        indicators={true}
-                                        controls={true}
-                                    /> }
-                                </CardHeader>
-                                <CardBody className="pt-0">
-                                  <CardText>Thời gian: <b>{row.startDate} đến {row.endDate}</b></CardText>
-                                  <p className="h3">{row.destinationTour}</p>
-
-
-                                  <CardText>Mã Tour:<b>{row.codeTour}</b>   </CardText>
-                                  <CardText>Nơi khởi hành:  <b>{row.startingGateTour} </b></CardText>
-                                  <p className="h4 text-danger">{row.priceAdult}đ</p>
-                                  <Button>
-                                    Chi tiết
-                                  </Button>
-                                  <CardText className="text-right">Số chỗ còn nhận:<b className="h4 text-danger">{row.numberOfPassengers}</b> </CardText>
-
-                                </CardBody>
-                              </Card>
-                            </Col>
-                          );
-                        })}
-
-
-                      </Row> */}
+                      
                       <BootstrapTable
                         {...toolkitprops.baseProps}
                         bootstrap4
@@ -743,7 +705,7 @@ const Trip = (props) => {
                       type="date"
                       bsSize="lg"
                       name="startDate"
-                      placeholder="Enter total member"
+                      placeholder="Enter start Date"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -757,7 +719,7 @@ const Trip = (props) => {
                       type="date"
                       bsSize="lg"
                       name="endDate"
-                      placeholder="Enter total member"
+                      placeholder="Enter end Date"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -771,7 +733,7 @@ const Trip = (props) => {
                       type="number"
                       bsSize="lg"
                       name="numberOfPassengers"
-                      placeholder="Enter total member"
+                      placeholder="Enter number Of Passengers"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -785,7 +747,7 @@ const Trip = (props) => {
                       type="number"
                       bsSize="lg"
                       name="priceAdult"
-                      placeholder="Enter total member"
+                      placeholder="Enter priceAdult"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -799,7 +761,7 @@ const Trip = (props) => {
                       type="number"
                       bsSize="lg"
                       name="surcharge"
-                      placeholder="Enter total member"
+                      placeholder="Enter surcharge"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -813,7 +775,7 @@ const Trip = (props) => {
                       type="text"
                       bsSize="lg"
                       name="nameGuide"
-                      placeholder="Enter code tour"
+                      placeholder="Enter name Guide"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -827,7 +789,7 @@ const Trip = (props) => {
                       type="text"
                       bsSize="lg"
                       name="phoneGuide"
-                      placeholder="Enter code tour"
+                      placeholder="Enter phone Guide"
                       component={ReactstrapInput}
                     />
                   </Col>
@@ -841,7 +803,7 @@ const Trip = (props) => {
                       type="text"
                       bsSize="lg"
                       name="codeTour"
-                      placeholder="Enter total member"
+                      placeholder="Enter code Tour"
                       component={ReactstrapInput}
                     />
                   </Col>

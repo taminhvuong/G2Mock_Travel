@@ -48,7 +48,11 @@ public class TourService implements ITourService {
     @Override
     public void updateTour(String codeTour, TourFormForUpdate tourFormForUpdate) {
         Tour tour=tourRespository.findByCodeTour(codeTour);
-        tour = modelMapper.map(tourFormForUpdate, Tour.class);
+        tour.setDescription(tourFormForUpdate.getDescription());
+        tour.setDestination(tourFormForUpdate.getDestination());
+        tour.setStartingGate(tourFormForUpdate.getStartingGate());
+        tour.setTourTime(tourFormForUpdate.getTourTime());
+        tour.setVehicle(tourFormForUpdate.getVehicle());
         tourRespository.save(tour);
     }
 

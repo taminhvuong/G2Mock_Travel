@@ -5,8 +5,11 @@ const bookingSelector = (state) => state.Booking;
 
 const selectBookingSelector = createSelector(
     bookingSelector,
-    state => state.trips);
+    state => state.bookings);
 
+const selectBookingByUserSelector = createSelector(
+    bookingSelector,
+    state => state.bookingByUsers);
 const selectBookingByCodeSelector = createSelector(
     bookingSelector,
     state => state.tripByCode);
@@ -33,6 +36,9 @@ const selectSelectedRowsSelector = createSelector(
     state => state.selectedRows);
 
 /** function */
+export const selectBookingsByUser = (state) => {
+    return selectBookingByUserSelector(state);
+}
 export const selectBookings = (state) => {
     return selectBookingSelector(state);
 }

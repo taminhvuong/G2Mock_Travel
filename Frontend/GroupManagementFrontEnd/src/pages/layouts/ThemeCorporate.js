@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { enableCorporateTheme } from "../../redux/actions/themeActions";
 
-import Dashboard from "../dashboards/Default";
+import Dashboard from "../trip/TripUI";
 
 const ThemeCorporate = () => {
   const dispatch = useDispatch();

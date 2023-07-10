@@ -2,7 +2,7 @@ import Api from './Api';
 
 const url = "/trips";
 
-const getAll = (page = 1, size = 10, sortField = 'codeTrip', sortType = 'desc', search = '', minTotalMember, maxTotalMember) => {
+const getAll = (page = 1, size = 10, sortField = 'startDate', sortType = 'asc', search = '', minTotalMember, maxTotalMember) => {
 
     const parameters = {
         page,
@@ -33,7 +33,7 @@ const existsByName = (name) => {
 
 const create = (
     codeTrip,
-    endDate,
+    // endDate,
     startDate,
     numberOfPassengers,
     priceAdult,
@@ -45,7 +45,7 @@ const create = (
 
     const body = {
         codeTrip,
-        endDate,
+        // endDate,
         startDate,
         numberOfPassengers,
 
@@ -67,12 +67,14 @@ const getById = (codeTrip) => {
 //     return Api.get(`${url}/getDetailTour/${codeTrip}`);
 // };
 
-const update = (codeTrip, endDate, startDate, numberOfPassengers, priceAdult, surcharge, nameGuide,
+const update = (codeTrip,
+    //  endDate, 
+     startDate, numberOfPassengers, priceAdult, surcharge, nameGuide,
 
     phoneGuide, codeTour) => {
 
     const body = {
-        endDate,
+        // endDate,
         startDate,
         numberOfPassengers,
         priceAdult,

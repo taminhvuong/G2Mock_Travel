@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookingService implements IBookingService {
 
@@ -39,6 +41,12 @@ public class BookingService implements IBookingService {
     }
 
     @Override
+    public List<Booking> findByUser(String userName ,int status) {
+
+        return bookingRespository.findByUser(userName,status);
+    }
+
+    @Override
     public Booking findBookingById(int id) {
         return bookingRespository.findById(id);
 
@@ -51,21 +59,23 @@ public class BookingService implements IBookingService {
 
     @Override
     public void saveBooking(BookingFormForCreate bookingFormForCreate) {
-        Trip trip=tripRepository.findByCodeTrip(bookingFormForCreate.getCodeTrip());
+        Trip trip = tripRepository.findByCodeTrip(bookingFormForCreate.getCodeTrip());
         Booking booking = modelMapper.map(bookingFormForCreate, Booking.class);
-User user=userRepository.findByUserName(bookingFormForCreate.getNameUser());
-        if(bookingFormForCreate.getCodeTrip()!=null){
+        User user = userRepository.findByUserName(bookingFormForCreate.getNameUser());
+        if (bookingFormForCreate.getCodeTrip() != null) {
             booking.setTrip(trip);
             booking.setUser(user);
+            float priceBooking= (trip.getPriceAdult()* bookingFormForCreate.getNumberAdult()+ trip.getPriceChildren()* bookingFormForCreate.getNumberAdult()+trip.getSurcharge());
+            booking.setTotalPrice((long) priceBooking);
         }
-        int numberOfBuy=bookingFormForCreate.getNumberAdult()+bookingFormForCreate.getNumberChildren();
-        tripService.updateTripNumberOfPassengersByCodeTrip(trip.getCodeTrip(),numberOfBuy);
+        int numberOfBuy = bookingFormForCreate.getNumberAdult() + bookingFormForCreate.getNumberChildren();
+        tripService.updateTripNumberOfPassengersByCodeTrip(trip.getCodeTrip(), numberOfBuy);
         bookingRespository.save(booking);
     }
 
     @Override
     public void updateBookingById(int id, BookingFormForUpdate bookingFormForUpdate) {
-        Booking booking=bookingRespository.findById(id);
+        Booking booking = bookingRespository.findById(id);
         booking.setFullName(bookingFormForUpdate.getFullName());
         booking = modelMapper.map(bookingFormForUpdate, Booking.class);
 

@@ -7,9 +7,12 @@ import com.vti.entity.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IBookingService {
 
     public Page<Booking> findAll(Pageable pageable, BookingFilter filter, String search);
+    public List<Booking> findByUser(String userName,int status);
     public Booking findBookingById(int id);
     public  void deleteBookingById(int id);
     public void saveBooking (BookingFormForCreate bookingFormForCreate);

@@ -4,13 +4,11 @@ import {
   CardHeader,
   CardBody,
   CardText,
-  Table,
-  Label,
-  FormGroup,
+ 
   CardTitle,
   Col,
   CardFooter,
-  Input,
+ 
   Button,
   Container,
   Row,
@@ -18,18 +16,17 @@ import {
 import * as Yup from 'yup';
 import storage from '../../Storage/Storage';
 import {
-  Clock,
-  Monitor,
+  
   Calendar,
-  Menu,
+ 
   UserPlus,
-  Circle,
+
   Bell as Bellicon,
   BookOpen as BookOpenIcon,
 } from "react-feather";
 import '../trip/DetailTrip.css'
 import { FastField, Field, Form, Formik } from "formik";
-import { ReactstrapInput } from "reactstrap-formik";
+import { ReactstrapInput  } from "reactstrap-formik";
 import { useParams } from 'react-router-dom';
 import TripApi from '../../api/TripApi';
 import { toastr } from "react-redux-toastr";
@@ -65,7 +62,7 @@ export default function Booking(props) {
       inputNumberChildren: '',
     }
   )
-  const onChangeHandle = (e) => {
+  const handleChange = (e) => {
     setListValueInput({ ...listValueInput, inputNumberAdult: e.target.value })
 
   }
@@ -80,6 +77,29 @@ export default function Booking(props) {
     // show notification
     toastr.success(title, message, options);
   }
+
+  // const CustomInputComponent = ({
+  //   field,
+  //   handleChange,// { name, value, onChange, onBlur }
+  //   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  //   ...props
+  // }) => (
+  //   <div>
+  //     <input type="text" {...field} {...props} onChange={handleChange} />
+  //     {touched[field.name] &&
+  //       errors[field.name] && <div className="error">{errors[field.name]}</div>}
+  //   </div>
+  // );
+  const CustomInputComponent = ({ field, form, handleChange, ...rest }) =>
+    <div>
+      <input {...field} onChange={handleChange} {...rest} />
+      {form.errors[field.name] &&
+        form.touched[field.name] &&
+        <div>
+          {form.errors[field.name]}
+        </div>}
+    </div>;
+
   return (
     <>
       <Container>
@@ -106,15 +126,17 @@ export default function Booking(props) {
             enableReinitialize
             initialValues={
               {
-                fullName: '',
-                address: '',
-                email: '',
-                phone: '',
-                numberAdult: '',
-                numberChildren: '',
-                totalPrice: '',
-                nameUser: '',
-                codeTrip: '',
+                fullName:'',
+                phone:'',
+                email:'',
+                destination:'',
+                address:'',
+                numberAdult:'',
+                numberChildren:'',
+                // totalPrice:'',
+                nameUser:'',
+                codeTrip:'',
+               
               }
             }
             validationSchema={
@@ -126,12 +148,12 @@ export default function Booking(props) {
                   .integer('Must be greater than or equal 0 and integer')
                   .required('Required'),
                 numberChildren: Yup.number()
-                  .min(0,'Must be greater than or equal 0 and integer')
+                  .min(0, 'Must be greater than or equal 0 and integer')
                   .integer('Must be greater than or equal 0 and integer')
                   .required('Required'),
                 fullName: Yup.string()
-                  .min(6,'Must be between 6 and 50 characters')
-                  .max(50,'Must be between 6 and 50 characters')
+                  .min(6, 'Must be between 6 and 50 characters')
+                  .max(50, 'Must be between 6 and 50 characters')
                   .required('Required'),
                 address: Yup.string()
                   .required('Required'),
@@ -155,20 +177,23 @@ export default function Booking(props) {
 
                     values.fullName,
                     values.phone,
-                    values.address,
+                    
                     values.email,
+                    tripByCodeTrio.destinationTour,
+                    values.address,
                     values.numberAdult,
                     values.numberChildren,
-                    tripByCodeTrio.priceAdult * values.numberAdult + tripByCodeTrio.priceChildren * values.numberChildren,
+                    // tripByCodeTrio.priceAdult * values.numberAdult + tripByCodeTrio.priceChildren * values.numberChildren,
                     storage.getUserInfo().userName,
                     codeTrip,
                   );
                   // show notification
                   showSuccessNotification(
                     "Create Booking Successfully!"
+
                   );
-                  // close modal
-                  // Refresh table
+                  props.history.push("/");
+
                   // refreshForm();
                 } catch (error) {
                   console.log(error);
@@ -181,8 +206,13 @@ export default function Booking(props) {
             }
             validateOnChange={false}
             validateOnBlur={false}
+            handleChange={e =>
+              setListValueInput({ ...listValueInput, inputNumberAdult: e.target.value })
+
+            }
           >
-            {({ isSubmitting }) => (
+
+            {({ isSubmitting, handleChange }) => (
               <Form className='flex-center'>
                 <Col lg="7" className="tongquantrip">
                   <Card className="p-3">
@@ -200,13 +230,13 @@ export default function Booking(props) {
                             name="fullName"
                             placeholder="Nhập họ và tên"
                             component={ReactstrapInput}
-                            
+
                           />
                         </Col>
                         <Col lg="6">
                           <label className='h4 font-weight-bolder'>Số điện thoại:</label>
 
-                          <FastField
+                          <Field
                             type="text"
                             bsSize="lg"
                             name="phone"
@@ -253,13 +283,34 @@ export default function Booking(props) {
                             type="number"
                             bsSize="lg"
                             name="numberAdult"
-                            min="1"
-                            // onChange={(e)=>{setListValueInput({ ...listValueInput, inputNumberAdult: e.target.value } )
-                            // console.log(listValueInput.inputNumberAdult)}}
-                            onChange={onChangeHandle}
+                            min="0"
+                            handleChange={handleChange}
                             placeholder="Nhập số lượng"
                             component={ReactstrapInput}
+                         
                           />
+                          {/* <FastField
+                            type="number"
+                            bsSize="lg"
+                            name="numberChildren
+                            min="0"
+                            onChange={e => {
+                              handleChange(e)
+                              let someValue = e.currentTarget.value
+                            }}
+                            placeholder="Nhập số lượng"
+                            component={CustomInputComponent}
+                          /> */}
+                          {/* <Field name="numberAdult">
+                            {({ field,onChange:{handleChange}, form, meta }) => (
+                              <div>
+                                <input type="text" {...field}  placeholder="numberAdult" />
+                                {meta.ctouched &&
+                                  meta.error && <div className="error">{meta.error}</div>}
+                              </div>
+                            )}
+                          </Field> */}
+
 
                         </Col>
                         <Col lg="6">
@@ -275,6 +326,7 @@ export default function Booking(props) {
                             placeholder="Nhập số lượng"
                             component={ReactstrapInput}
                           />
+
                         </Col>
 
                       </Row>
@@ -305,7 +357,7 @@ export default function Booking(props) {
                       <CardTitle>Trẻ em <CardText className='float-right'>{tripByCodeTrio.priceChildren}</CardText></CardTitle>
                       <CardTitle>Phụ thu phòng <CardText className='float-right'>{tripByCodeTrio.surcharge}</CardText></CardTitle>
                       <hr />
-                      <CardText tag="h4">Tổng {tripByCodeTrio.priceAdult * listValueInput.inputNumberAdult} <CardText className='float-right'></CardText></CardText>
+                      <CardText tag="h4">Tổng {listValueInput.inputNumberAdult} <CardText className='float-right'></CardText></CardText>
 
                     </div>
                   </Card>

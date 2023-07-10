@@ -40,6 +40,15 @@ public class BookingController {
         Page<BookingDto> dtoPages = new PageImpl<>(bookingDtos, pageable, bookings.getTotalElements());
         return new ResponseEntity<>(dtoPages, HttpStatus.OK);
     }
+    @GetMapping(value = "/getByUser/{userName}&{status}")
+    public ResponseEntity<?> findBookingByUser(@PathVariable(name = "userName") String userName,@PathVariable(name = "status") int status) {
+       List<Booking> bookings = service.findByUser(userName,status);
+
+
+        List<BookingDto> bookingDtos = modelMapper.map(bookings, new TypeToken<List<BookingDto>>() {
+        }.getType());
+        return new ResponseEntity<>(bookingDtos, HttpStatus.OK);
+    }
 
 
 

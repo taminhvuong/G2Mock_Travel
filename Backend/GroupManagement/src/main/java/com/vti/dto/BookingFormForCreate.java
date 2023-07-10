@@ -10,7 +10,7 @@ public class BookingFormForCreate {
     private String phone;
 
     private String email;
-
+    private String destination;
     private String address;
 
     private int numberAdult;

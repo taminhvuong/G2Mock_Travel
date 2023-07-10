@@ -2,7 +2,7 @@ import * as types from "../constants";
 
 const initialState = {
   bookings: [],
-
+bookingByUsers:[],
   page: 1,
   size: 20,
   totalSize: 0,
@@ -27,6 +27,12 @@ export default function reducer(state = initialState, actions) {
         // search
         search: actions.payload.search
       };
+      case types.GET_BOOKING_BY_USER:
+        return {
+         
+          bookingByUsers: actions.payload.bookingByUsers,
+          
+        };
       
     case types.GET_LIST_BOOKING_SELECTED_ROWS:
       return {

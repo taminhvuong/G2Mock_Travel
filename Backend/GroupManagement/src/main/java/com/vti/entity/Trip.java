@@ -39,7 +39,7 @@ public class Trip {
     private String nameGuide ;
     @Column
     private String phoneGuide ;
-    @Column(columnDefinition = "bit default 0")
+    @Column(columnDefinition = "bit default 1")
     private int status;
 
     @ManyToOne

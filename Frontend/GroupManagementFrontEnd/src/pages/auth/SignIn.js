@@ -103,6 +103,7 @@ const SignIn = (props) => {
                 // save token & UserInfo to storage
                 storage.setToken(result.token);
                 storage.setUserInfo(
+                  result.id,
                   result.userName,
                   result.email,
                   result.firstName,
@@ -113,6 +114,7 @@ const SignIn = (props) => {
                 // save token & UserInfo to redux
                 props.setTokenInfo(result.token);
                 props.setUserLoginInfo(
+                  result.id,
                   result.userName,
                   result.email,
                   result.firstName,
@@ -121,7 +123,7 @@ const SignIn = (props) => {
                   result.status)
 
                 // redirect to home page
-                props.history.push("/dashboard/default");
+                props.history.push("/");
               }
 
             } catch (error) {

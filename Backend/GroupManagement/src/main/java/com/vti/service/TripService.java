@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,9 +36,9 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public Page<Trip> findAll(Pageable pageable, TripFilter filter, String search){
+    public Page<Trip> findAll(Pageable pageable, TripFilter filter, String search) {
         TripSpecificationBuilder specification = new TripSpecificationBuilder(filter, search);
-        return tripRepository.findAll(specification.build(),pageable);
+        return tripRepository.findAll(specification.build(), pageable);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class TripService implements ITripService {
     @Override
     public void deleteByListCodeTrip(List<String> codeTrips) {
 
-            tripRepository.deleteByListCodeTrip(codeTrips);
+        tripRepository.deleteByListCodeTrip(codeTrips);
 
     }
 
@@ -64,36 +67,48 @@ public class TripService implements ITripService {
 
     @Override
     public void saveTrip(TripFormForCreate tripFormForCreate) {
-        if (tripFormForCreate.getCodeTrip() !=null){
-        Tour tour=tourRepository.findByCodeTour(tripFormForCreate.getCodeTour());
+//        if (tripFormForCreate.getCodeTrip() !=null){
+        Tour tour = tourRepository.findByCodeTour(tripFormForCreate.getCodeTour());
         Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
         trip.setTour(tour);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        Calendar c1 = Calendar.getInstance();
+        Date date = tripFormForCreate.getStartDate();
+        c1.setTime(date);
+        c1.roll(Calendar.DATE, tour.getTourTime());
+        trip.setEndDate((c1.getTime()));
+
         tripRepository.save(trip);
-        }
-        else{
-          //  Trip trip=new Trip();
-        Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
-           // trip.setCodeTrip(tripFormForCreate.getCodeTrip());
-            tripRepository.save(trip);
-        }
+//        }
+//        else{
+//          //  Trip trip=new Trip();
+//        Trip trip = modelMapper.map(tripFormForCreate, Trip.class);
+//           // trip.setCodeTrip(tripFormForCreate.getCodeTrip());
+//            tripRepository.save(trip);
+//        }
     }
 
     @Override
     public void updateTripByCodeTrip(String codeTrip, TripFormForUpdate formUpdateTour) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
         System.out.println(trip.getCodeTrip());
-        Tour tour=tourRepository.findByCodeTour(formUpdateTour.getCodeTour());
+        Tour tour = tourRepository.findByCodeTour(formUpdateTour.getCodeTour());
 
         trip.setPriceAdult(formUpdateTour.getPriceAdult());
-        trip.setEndDate(formUpdateTour.getEndDate());
+//        trip.setEndDate(formUpdateTour.getEndDate());
         trip.setStartDate(formUpdateTour.getStartDate());
         trip.setNumberOfPassengers(formUpdateTour.getNumberOfPassengers());
         trip.setNameGuide(formUpdateTour.getNameGuide());
         trip.setPhoneGuide(formUpdateTour.getPhoneGuide());
-        if(formUpdateTour.getCodeTour()!=null){
+        if (formUpdateTour.getCodeTour() != null) {
             trip.setTour(tour);
 //            trip = modelMapper.map(formUpdateTour, Trip.class);
-
+            Calendar c1 = Calendar.getInstance();
+            Date date = formUpdateTour.getStartDate();
+            c1.setTime(date);
+            c1.roll(Calendar.DATE, tour.getTourTime());
+            trip.setEndDate((c1.getTime()));
         }
         tripRepository.save(trip);
 
@@ -101,13 +116,12 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public void updateTripNumberOfPassengersByCodeTrip(String codeTrip,int numberOfBuy) {
+    public void updateTripNumberOfPassengersByCodeTrip(String codeTrip, int numberOfBuy) {
         Trip trip = tripRepository.findByCodeTrip(codeTrip);
-        if(numberOfBuy>trip.getNumberOfPassengers()){
+        if (numberOfBuy > trip.getNumberOfPassengers()) {
 
-        }
-        else{
-            trip.setNumberOfPassengers(trip.getNumberOfPassengers() -  numberOfBuy);
+        } else {
+            trip.setNumberOfPassengers(trip.getNumberOfPassengers() - numberOfBuy);
 
         }
     }

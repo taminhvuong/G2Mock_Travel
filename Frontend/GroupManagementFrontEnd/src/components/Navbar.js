@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../redux/actions/sidebarActions";
+import storage from "../Storage/Storage";
 
 import {
   Row,
@@ -15,12 +16,17 @@ import {
   ListGroup,
   ListGroupItem,
   Form,
-  Input
+  Input,
+  NavbarToggler,
+  NavbarBrand
+
+
 } from "reactstrap";
 
 import {
   AlertCircle,
   Bell,
+  ShoppingCart,
   BellOff,
   Home,
   MessageCircle,
@@ -69,32 +75,7 @@ const notifications = [
   }
 ];
 
-const messages = [
-  {
-    name: "Ashley Briggs",
-    avatar: avatar5,
-    description: "Nam pretium turpis et arcu. Duis arcu tortor.",
-    time: "15m ago"
-  },
-  {
-    name: "Chris Wood",
-    avatar: avatar1,
-    description: "Curabitur ligula sapien euismod vitae.",
-    time: "2h ago"
-  },
-  {
-    name: "Stacie Hall",
-    avatar: avatar4,
-    description: "Pellentesque auctor neque nec urna.",
-    time: "4h ago"
-  },
-  {
-    name: "Bertha Martin",
-    avatar: avatar3,
-    description: "Aenean tellus metus, bibendum sed, posuere ac, mattis non.",
-    time: "5h ago"
-  }
-];
+
 
 const NavbarDropdown = ({
   children,
@@ -162,32 +143,15 @@ const NavbarComponent = (props) => {
 
       <Collapse navbar>
         <Nav className="ml-auto" navbar>
-          <NavbarDropdown
-            header="New Messages"
-            footer="Show all messages"
-            icon={MessageCircle}
-            count={messages.length}
-            showBadge
+          <NavbarBrand 
+          xs={2}
+          title="Đơn hàng"
+          className="pt-2 "
+          color="black"
+           href="/bookings"
           >
-            {messages.map((item, key) => {
-              return (
-                <NavbarDropdownItem
-                  key={key}
-                  icon={
-                    <img
-                      className="avatar img-fluid rounded-circle"
-                      src={item.avatar}
-                      alt={item.name}
-                    />
-                  }
-                  title={item.name}
-                  description={item.description}
-                  time={item.time}
-                  spacing
-                />
-              );
-            })}
-          </NavbarDropdown>
+            <ShoppingCart/>
+          </NavbarBrand>
 
           <NavbarDropdown
             header="New Notifications"
@@ -286,7 +250,10 @@ const NavbarComponent = (props) => {
               <DropdownItem onClick={() => history.push("/profile")}>
                 <User size={18} className="align-middle mr-2" />
                 Profile
-              </DropdownItem>
+              </DropdownItem> 
+              <DropdownItem onClick={() => {    
+                history.push("/auth/sign-in")
+              }}>Sign In</DropdownItem>
               <DropdownItem>
                 <PieChart size={18} className="align-middle mr-2" />
                 Analytics
@@ -294,7 +261,19 @@ const NavbarComponent = (props) => {
               <DropdownItem divider />
               <DropdownItem onClick={() => history.push("/settings")}>Settings & Privacy</DropdownItem>
               <DropdownItem>Help</DropdownItem>
-              <DropdownItem>Sign out</DropdownItem>
+              <DropdownItem onClick={() => {
+                storage.setUserInfo(
+                  "",
+                  "",
+                  "", 
+                  "",
+                  "", 
+                  "",
+                  "",) ;
+                  storage.setToken("");
+                  
+                history.push("/auth/sign-in")
+              }}>Sign out</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>

@@ -1,8 +1,11 @@
 package com.vti.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Data
@@ -23,17 +26,19 @@ public class BookingDto {
 
     private Long  totalPrice;
     private String codeTrip;
-
-    private Date startDate;
-
-    private Date endDate;
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDateTrip;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDateTrip;
+    private String destination;
     private int numberOfPassengers;
 
-    private float priceAdult ;
+    private float priceAdultTrip ;
 
-    private float priceChildren ;
+    private float priceChildrenTrip ;
 
-    private float surcharge ;
+    private float surchargeTrip ;
 
 }

@@ -6,7 +6,7 @@ import {
     Card,
     CardText,
     Table,
-    CardTitle,
+
     Col,
     Button,
     Container,
@@ -14,18 +14,10 @@ import {
 
 } from "reactstrap";
 
-import {
-    Clock,
-    Monitor,
-    Menu,
-    Circle,
-    Bell as Bellicon,
-    BookOpen as BookOpenIcon,
-} from "react-feather";
-import { getTripByCodeAction, updateSelectedRowsAction } from '../../redux/actions/TripAction';
-import { selectTripByCode } from "../../redux/selectors/TripSelector";
-import { connect } from "react-redux";
 
+
+
+import ReactHtmlParser,{processNodes,convertNodeToElement,htmlparser2} from 'react-html-parser'
 
 export default function DetailTrip(props) {
 
@@ -43,7 +35,7 @@ export default function DetailTrip(props) {
 
         getTripByCode(codeTrip)
 
-        console.log(props.tripByCode)
+        console.log(tripByCodeTrio)
 
 
     }, [codeTrip]);
@@ -100,6 +92,8 @@ export default function DetailTrip(props) {
                     <Col lg="4" >
                         <Card className="p-2 font-weight-bolder">
                             <CardText>Khởi hành: {tripByCodeTrio.startDate}</CardText>
+                            <CardText>Kết thúc: {tripByCodeTrio.endDate}</CardText>
+
                             <CardText>Tập trung: Trước khi khởi hành 1h30p</CardText>
                             <CardText>Thời gian: {tripByCodeTrio.timeTour} ngày</CardText>
                             <CardText>Nơi khởi hành: {tripByCodeTrio.startingGateTour}</CardText>
@@ -151,7 +145,7 @@ export default function DetailTrip(props) {
                     <Col >
                         <Card className="p-3">
                             <CardText tag="h4">Chi tiết lịch trình</CardText>
-                            <CardText>{tripByCodeTrio.descriptionTour}</CardText>
+                            <CardText>{ReactHtmlParser(tripByCodeTrio.descriptionTour)}</CardText>
                         </Card>
                     </Col>
                 </Row>
@@ -159,7 +153,9 @@ export default function DetailTrip(props) {
                     <Col lg="5">
                         <Card className="p-2">
                             <CardText tag="h4">Thông tin hướng dẫn viên</CardText>
-                            <CardText>HDV : {(tripByCodeTrio.nameGuide !==null )? (tripByCodeTrio.nameGuide):("Đang cập nhập")}</CardText>
+                            HDV:{ReactHtmlParser(tripByCodeTrio.nameGuide)}
+                            <p id="cKeditor"></p>
+                            {/* <CardText>HDV : {(tripByCodeTrio.nameGuide !==null )? (tripByCodeTrio.nameGuide):("Đang cập nhập")}</CardText> */}
                             <CardText>Số điện thoại :{(tripByCodeTrio.phoneGuide !==null )? (tripByCodeTrio.phoneGuide):("Đang cập nhập")}</CardText>
                         </Card>
                     </Col>

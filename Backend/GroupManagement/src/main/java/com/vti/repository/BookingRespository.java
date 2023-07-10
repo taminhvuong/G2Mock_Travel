@@ -15,6 +15,8 @@ import java.util.List;
 public interface BookingRespository  extends JpaRepository<Booking, Integer> , JpaSpecificationExecutor<Booking> {
 
     List<Booking> findAll();
+@Query("from Booking where user.userName=:userName and status =:status")
+    List<Booking> findByUser(@Param("userName") String userName,@Param("status") int status);
     Booking findById(int id);
     @Transactional
     void deleteById(int  id);

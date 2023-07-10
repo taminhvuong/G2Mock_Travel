@@ -2,24 +2,13 @@ import async from "../components/Async";
 
 import {
   Bell as Bellicon,
-  BookOpen as BookOpenIcon,
-  Calendar as CalendarIcon,
-  CheckSquare as CheckSquareIcon,
-  Grid as GridIcon,
-  Heart as HeartIcon,
   Layout as LayoutIcon,
   List as ListIcon,
-  MapPin as MapPinIcon,
   Monitor as MonitorIcon,
-
-  PieChart as PieChartIcon,
   Sliders as SlidersIcon,
   Users as UsersIcon,
-  FaceBook as FaceBookIcon,
 } from "react-feather";
 
-// Landing
-import Landing from "../pages/landing/Landing";
 
 // Auth
 import SignIn from "../pages/auth/SignIn";
@@ -34,14 +23,6 @@ import ThemeClassic from "../pages/layouts/ThemeClassic";
 import ThemeCorporate from "../pages/layouts/ThemeCorporate";
 import ThemeModern from "../pages/layouts/ThemeModern";
 
-// Misc
-// import Blank from "../pages/misc/Blank";
-
-// UI Elements
-// import Carousel from "../pages/ui-elements/Carousel";
-import Tabs from "../pages/ui-elements/Tabs";
-
-
 // Pages
 import Profile from "../pages/pages/Profile";
 import Settings from "../pages/pages/Settings";
@@ -51,22 +32,8 @@ import Settings from "../pages/pages/Settings";
 import NewPassword from "../pages/auth/NewPassword";
 import withAuth from "../HOC/withAuth";
 
-// Dashboards
-const Default = async(() => import("../pages/dashboards/Default"));
-
-
-
-
-const Editors = async(() => import("../pages/forms/Editors"));
-// const Validation = async(() => import("../pages/forms/Validation"));
-const Wizard = async(() => import("../pages/forms/Wizard"));
-
-
-
-
 
 // groups
-const Group = async(() => import("../pages/group/Group"));
 const Trip = async(() => import("../pages/trip/Trip"));
 
 const TripUI = async(() => import("../pages/trip/TripUI"));
@@ -74,48 +41,25 @@ const Tour = async(() => import("../pages/tour/Tour"));
 const DetailTrip = async(() => import("../pages/trip/DetailTrip"));
 const Booking = async(() => import("../pages/booking/Booking.js"));
 const BookingManagement = async(() => import("../pages/booking/BookingManagement.js"));
-const TripWYSIWYG = async(() => import("../pages/trip/TripManagement.js"));
 
-//Routes
-const landingRoutes = {
+const CreateTrip = async(() => import("../pages/trip/CreateTrip.js"));
+
+
+const TripRoutes = {
   path: "/",
-  name: "Landing Page",
-  component: Landing,
-  children: null
-};
-
-const dashboardRoutes = {
-  path: "/dashboard",
-  name: "Dashboards",
+  name: "Trip UI",
   header: "Pages",
   badgeColor: "primary",
   badgeText: "5",
   icon: SlidersIcon,
   containsHome: true,
-  children: [
-    {
-      path: "/dashboard/default",
-      name: "Default",
-      component: withAuth(Default)
-    },
+  component: withAuth(TripUI),
+  children: null
 
-  ]
 };
 
-const groupRoutes = {
-  path: "/groups",
-  name: "Group Management",
-  icon: ListIcon,
-  component: withAuth(Group),
-  children: null
-};
-const TripManagementRoute = {
-  path: "/tripWY",
-  name: "TripWY Management",
-  icon: ListIcon,
-  component: withAuth(TripWYSIWYG),
-  children: null
-};
+
+
 const tripRoutes = {
   path: "/trips",
   name: "Trip  Management ",
@@ -125,9 +69,9 @@ const tripRoutes = {
 
 
 };
-const BookingRoutes = {
+const BookingUIRoutes = {
   path: "/bookings",
-  name: "Booking  Management ",
+  name: "Booking  UI ",
   icon: Bellicon,
   component: withAuth(BookingManagement),
   children: null
@@ -147,13 +91,7 @@ const tourRoutes = {
   component: withAuth(Tour),
   children: null
 };
-const tripUi = {
-  path: "/tripUi",
-  name: "TripUi Management",
-  icon: LayoutIcon,
-  component: withAuth(TripUI),
-  children: null
-};
+
 const bookingRoute = {
   path: "/booking/:codeTrip?",
   name: "Booking Management",
@@ -177,12 +115,9 @@ const pageRoutes = {
       name: "Settings",
       component: Settings
     },
-
-
-
-
   ]
 };
+
 
 const authRoutes = {
   path: "/auth",
@@ -253,68 +188,18 @@ const layoutRoutes = {
 };
 
 
-const uiRoutes = {
-  path: "/ui",
-  name: "UI Elements",
-  header: "Tools & Components",
-  icon: GridIcon,
-  children: [
-
-
-
-
-
-    {
-      path: "/ui/tabs",
-      name: "Tabs",
-      component: Tabs
-    },
-
-  ]
-};
-
-
-
-
-const formPluginsRoutes = {
-  path: "/form-plugins",
-  name: "Form Plugins",
-  icon: CheckSquareIcon,
-  header: "Plugin & Addons",
-  children: [
-
-    {
-      path: "/form-plugins/editors",
-      name: "Editors",
-      component: Editors
-    },
-
-    {
-      path: "/form-plugins/wizard",
-      name: "Wizard",
-      component: Wizard
-    }
-  ]
-};
-
-
-// const privateRoutes = {
-//   path: "/private",
-//   name: "Private",
-//   children: [
-//     {
-//       path: "/private/blank",
-//       name: "Blank Page",
-//       component: Blank
-//     }
-//   ]
-// };
-
 // This route is not visisble in the sidebar
 const ProfileRoutes = {
   path: "/profile",
   name: "Profile",
   component: withAuth(Profile),
+  children: null
+};
+
+const CreateTripRoutes = {
+  path: "/createTrip/:codeTripUpdate?",
+  name: "Create Trip",
+  component: withAuth(CreateTrip),
   children: null
 };
 
@@ -330,37 +215,28 @@ const SettingsRoutes = {
 export const dashboard = [
   detailTripRoute,
   bookingRoute,
-  tripUi,
-  dashboardRoutes,
-  groupRoutes,
+  TripRoutes,
   tripRoutes,
   tourRoutes,
   pageRoutes,
   layoutRoutes,
-  uiRoutes,
-  formPluginsRoutes,
-  BookingRoutes,
+  BookingUIRoutes,
   ProfileRoutes,
   SettingsRoutes,
-  TripManagementRoute
+  
+  CreateTripRoutes
 ];
 
-// Landing specific routes
-export const landing = [landingRoutes];
 
 // Auth specific routes
 export const page = [authRoutes];
 
 // All routes
 export default [
-  dashboardRoutes,
-  tripUi,
   tourRoutes,
   tripRoutes,
-  BookingRoutes,
-  pageRoutes,
+  BookingUIRoutes,
   authRoutes,
-  uiRoutes,
-  formPluginsRoutes,
+  TripRoutes,
 
 ];

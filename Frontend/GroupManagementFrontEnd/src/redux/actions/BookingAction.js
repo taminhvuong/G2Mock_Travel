@@ -1,6 +1,6 @@
 import * as types from "../constants";
 
-export function getListTripAction(bookings, page, totalSize, minTotalMember, maxTotalMember, search) {
+export function getListBookingAction(bookings, page, totalSize, minTotalMember, maxTotalMember, search) {
     return {
         type: types.GET_LIST_BOOKING,
         payload: {
@@ -8,11 +8,16 @@ export function getListTripAction(bookings, page, totalSize, minTotalMember, max
 
             page,
             totalSize,
-
-
-
             // search
             search
+        }
+    };
+};
+export function getListBookingByUserAction(bookingByUsers) {
+    return {
+        type: types.GET_BOOKING_BY_USER,
+        payload: {
+            bookingByUsers,
         }
     };
 };
